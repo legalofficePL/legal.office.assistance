@@ -1,156 +1,286 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <title>Wsparcie administracyjne – ETPC</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Wsparcie administracyjne przy wnioskach o polubowne rozwiązanie sporu oraz przygotowaniu skarg do ETPC.">
+<meta charset="UTF-8">
+<title>Legal Office Assistance</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f4f6f8;
-      color: #222;
-    }
-    header {
-      background: #1f2937;
-      color: white;
-      padding: 30px;
-      text-align: center;
-    }
-    .lang-switch button {
-      margin: 5px;
-      padding: 6px 12px;
-      cursor: pointer;
-    }
-    main {
-      max-width: 900px;
-      margin: auto;
-      padding: 30px;
-      background: white;
-    }
-    h2 {
-      color: #1f2937;
-    }
-    ul {
-      margin-left: 20px;
-    }
-    footer {
-      background: #e5e7eb;
-      text-align: center;
-      padding: 15px;
-      font-size: 0.9em;
-    }
-    .lang { display: none; }
-  </style>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f4f6f8;
+  color: #222;
+}
+
+/* ===== HEADER ===== */
+header {
+  min-height: 65vh;
+  background-image:
+    linear-gradient(rgba(20,30,50,0.75), rgba(20,30,50,0.75)),
+    url('https://legalservicespl.neocities.org/plik_00000000b470722fa6068d1dd788ce2e.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+  color: #ffffff;
+  padding: 20px;
+}
+
+header h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+header p {
+  font-size: 18px;
+  max-width: 720px;
+}
+
+/* ===== LANGUAGE BUTTONS ===== */
+nav {
+  margin-top: 20px;
+}
+
+nav button {
+  margin: 5px;
+  padding: 10px 16px;
+  border: none;
+  background: #d4af37;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* ===== CONTENT ===== */
+.section {
+  max-width: 900px;
+  margin: 30px auto;
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 6px;
+}
+
+h2 {
+  color: #1f2a44;
+}
+
+/* ===== LANG SYSTEM ===== */
+.lang {
+  display: none;
+}
+
+.lang.active {
+  display: block;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  padding: 20px;
+}
+</style>
+
+<script>
+function setLang(lang) {
+  document.querySelectorAll('.lang').forEach(function(el) {
+    el.classList.remove('active');
+  });
+  document.getElementById(lang).classList.add('active');
+}
+</script>
 </head>
 
 <body>
 
 <header>
-  <h1>Wsparcie administracyjne</h1>
-  <p>Wnioski administracyjne • ETPC • Warunki odbywania kary</p>
+  <h1>Legal Office Assistance</h1>
+  <p>
+    Assistance in amicable settlements and preparation of applications
+    related to violations of human rights
+  </p>
 
-  <nav class="lang-switch">
+  <nav>
     <button onclick="setLang('pl')">PL</button>
     <button onclick="setLang('ua')">UA</button>
     <button onclick="setLang('en')">EN</button>
   </nav>
 </header>
 
-<main>
-<!-- ================= PL ================= -->
-<section class="lang pl">
-  <h2>Zakres wsparcia</h2>
-  <p>
-    Oferujemy pomoc administracyjną i informacyjną przy sporządzaniu
-    wniosków o polubowne rozwiązanie sporu przed organami Republiki Słowenii
-    oraz przy formalnym przygotowaniu skarg do Europejskiego Trybunału Praw Człowieka (ETPC).
-  </p>
+<!-- ===== POLSKI ===== -->
+<div id="pl" class="lang active">
 
-  <ul>
-    <li>przygotowanie projektów wniosków administracyjnych</li>
-    <li>pomoc w wypełnieniu formularza ETPC</li>
-    <li>opisanie i uporządkowanie stanu faktycznego</li>
-    <li>pomoc językowa i redakcyjna</li>
-    <li>informacja o procedurze i wymaganiach formalnych</li>
-  </ul>
+  <div class="section">
+    <h2>Zakres pomocy</h2>
+    <p>
+      Świadczymy pomoc w sporządzaniu wniosków o polubowne rozwiązanie sporu
+      przed organami krajowymi, w szczególności w sprawach dotyczących
+      nieludzkiego lub poniżającego traktowania podczas odbywania kary
+      pozbawienia wolności.
+    </p>
+    <p>
+      Na podstawie danych przekazanych przez klienta przygotowujemy kompletne
+      wnioski do Europejskiego Trybunału Praw Człowieka (ETPC),
+      a także zapewniamy wsparcie w negocjacjach dotyczących odszkodowania.
+    </p>
+  </div>
 
-  <h2>Charakter pomocy</h2>
-  <p>
-    Pomoc ma charakter administracyjny i techniczny.
-    Nie stanowi porady prawnej ani reprezentacji przed sądami lub organami.
-  </p>
-</section>
+  <div class="section">
+    <h2>Cennik</h2>
+    <ul>
+      <li>
+        Wniosek o polubowne rozwiązanie sporu (organy krajowe – Słowenia):
+        <strong>50 EUR</strong> + koszty druku i wysyłki
+        <br>
+        <small>Średni czas do wypłaty środków: około 5 miesięcy</small>
+      </li>
+      <br>
+      <li>
+        Przygotowanie wniosku do Europejskiego Trybunału Praw Człowieka:
+        <strong>od 150 EUR</strong>
+        <br>
+        <small>
+          Postępowanie bardziej pracochłonne; czas rozpoznania sprawy
+          od 1 do 2 lat, przy potencjalnie znacznie wyższych kwotach
+          odszkodowania
+        </small>
+      </li>
+    </ul>
+  </div>
 
-<!-- ================= UA ================= -->
-<section class="lang ua">
-  <h2>Сфера допомоги</h2>
-  <p>
-    Ми надаємо адміністративну та інформаційну допомогу
-    при підготовці заяв про мирне врегулювання спору
-    до органів Республіки Словенія, а також при формальній
-    підготовці скарг до Європейського суду з прав людини (ЄСПЛ).
-  </p>
+  <div class="section">
+    <h2>Języki</h2>
+    <p>
+      Komunikacja możliwa we wszystkich językach europejskich,
+      w tym w języku polskim, ukraińskim oraz angielskim.
+    </p>
+  </div>
 
-  <ul>
-    <li>підготовка проєктів адміністративних заяв</li>
-    <li>допомога у заповненні формуляра ЄСПЛ</li>
-    <li>опис та впорядкування фактичних обставин</li>
-    <li>мовна та редакційна допомога</li>
-    <li>інформація щодо процедури та формальних вимог</li>
-  </ul>
+  <div class="section">
+    <h2>Kontakt</h2>
+    <p><strong>E-mail:</strong> legal.office.assistance.pl@gmail.com</p>
+    <p><strong>Telefon:</strong> +48 725 114 019</p>
+    <p><strong>WhatsApp / Telegram:</strong> +36 70 265 5296</p>
+  </div>
 
-  <h2>Характер допомоги</h2>
-  <p>
-    Допомога має адміністративний та технічний характер.
-    Вона не є юридичною консультацією та не передбачає представництва
-    в судах або перед органами влади.
-  </p>
-</section>
+</div>
 
-<!-- ================= EN ================= -->
-<section class="lang en">
-  <h2>Scope of assistance</h2>
-  <p>
-    We provide administrative and informational support in the preparation
-    of applications for amicable settlement before the authorities of the Republic of Slovenia,
-    as well as formal assistance in preparing applications to the European Court of Human Rights (ECHR).
-  </p>
+<!-- ===== ENGLISH ===== -->
+<div id="en" class="lang">
 
-  <ul>
-    <li>preparation of draft administrative applications</li>
-    <li>assistance with completing the ECHR application form</li>
-    <li>structuring and describing the factual background</li>
-    <li>linguistic and editorial assistance</li>
-    <li>information on procedures and formal requirements</li>
-  </ul>
+  <div class="section">
+    <h2>Scope of assistance</h2>
+    <p>
+      We provide assistance in preparing amicable settlement applications
+      before national authorities, particularly in cases involving
+      inhuman or degrading treatment.
+    </p>
+    <p>
+      Based on information provided by the client, we prepare complete
+      applications to the European Court of Human Rights and assist
+      in compensation negotiations.
+    </p>
+  </div>
 
-  <h2>Nature of the assistance</h2>
-  <p>
-    The assistance provided is administrative and technical in nature.
-    It does not constitute legal advice and does not include legal representation
-    before courts or authorities.
-  </p>
-</section>
+  <div class="section">
+    <h2>Pricing</h2>
+    <ul>
+      <li>
+        Amicable settlement application:
+        <strong>50 EUR</strong> + printing and delivery costs
+        <br>
+        <small>Average time to payment: approx. 5 months</small>
+      </li>
+      <br>
+      <li>
+        Application to the European Court of Human Rights:
+        <strong>from 150 EUR</strong>
+        <br>
+        <small>Processing time: 1–2 years</small>
+      </li>
+    </ul>
+  </div>
 
-</main>
+  <div class="section">
+    <h2>Languages</h2>
+    <p>Communication available in all European languages.</p>
+  </div>
+
+  <div class="section">
+    <h2>Contact</h2>
+    <p><strong>Email:</strong> legal.office.assistance.pl@gmail.com</p>
+    <p><strong>Phone:</strong> +48 725 114 019</p>
+    <p><strong>WhatsApp / Telegram:</strong> +36 70 265 5296</p>
+  </div>
+
+</div>
+
+<!-- ===== UKRAINIAN ===== -->
+<div id="ua" class="lang">
+
+  <div class="section">
+    <h2>Сфера допомоги</h2>
+    <p>
+      Ми надаємо допомогу у підготовці заяв про дружнє врегулювання спору
+      перед національними органами, зокрема у справах щодо нелюдського
+      або такого, що принижує гідність, поводження.
+    </p>
+    <p>
+      На основі даних, наданих клієнтом, ми готуємо повні заяви
+      до Європейського суду з прав людини та допомагаємо
+      у переговорах щодо компенсації.
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>Вартість</h2>
+    <ul>
+      <li>
+        Дружнє врегулювання спору:
+        <strong>50 EUR</strong> + витрати на друк і відправлення
+        <br>
+        <small>Середній час: близько 5 місяців</small>
+      </li>
+      <br>
+      <li>
+        Заява до Європейського суду з прав людини:
+        <strong>від 150 EUR</strong>
+        <br>
+        <small>Тривалість розгляду: 1–2 роки</small>
+      </li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Мови</h2>
+    <p>Можлива комунікація всіма європейськими мовами.</p>
+  </div>
+
+  <div class="section">
+    <h2>Контакт</h2>
+    <p><strong>Email:</strong> legal.office.assistance.pl@gmail.com</p>
+    <p><strong>Телефон:</strong> +48 725 114 019</p>
+    <p><strong>WhatsApp / Telegram:</strong> +36 70 265 5296</p>
+  </div>
+
+</div>
 
 <footer>
-  <p>
-    Informational notice: This website provides administrative and technical assistance only.
-    No legal advice or legal representation is offered.
-  </p>
+  © Legal Office Assistance
 </footer>
-
-<script>
-  function setLang(lang) {
-    document.querySelectorAll('.lang').forEach(el => el.style.display = 'none');
-    document.querySelector('.' + lang).style.display = 'block';
-  }
-  setLang('pl'); // startujemy z językiem polskim
-</script>
 
 </body>
 </html>
