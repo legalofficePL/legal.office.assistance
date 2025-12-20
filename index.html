@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Wsparcie administracyjne – ETPC</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Wsparcie administracyjne przy wnioskach o polubowne rozwiązanie sporu oraz przygotowaniu skarg do ETPC.">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f6f8;
+      color: #222;
+    }
+    header {
+      background: #1f2937;
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+    .lang-switch button {
+      margin: 5px;
+      padding: 6px 12px;
+      cursor: pointer;
+    }
+    main {
+      max-width: 900px;
+      margin: auto;
+      padding: 30px;
+      background: white;
+    }
+    h2 {
+      color: #1f2937;
+    }
+    ul {
+      margin-left: 20px;
+    }
+    footer {
+      background: #e5e7eb;
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9em;
+    }
+    .lang { display: none; }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Wsparcie administracyjne</h1>
+  <p>Wnioski administracyjne • ETPC • Warunki odbywania kary</p>
+
+  <nav class="lang-switch">
+    <button onclick="setLang('pl')">PL</button>
+    <button onclick="setLang('ua')">UA</button>
+    <button onclick="setLang('en')">EN</button>
+  </nav>
+</header>
+
+<main>
+<!-- ================= PL ================= -->
+<section class="lang pl">
+  <h2>Zakres wsparcia</h2>
+  <p>
+    Oferujemy pomoc administracyjną i informacyjną przy sporządzaniu
+    wniosków o polubowne rozwiązanie sporu przed organami Republiki Słowenii
+    oraz przy formalnym przygotowaniu skarg do Europejskiego Trybunału Praw Człowieka (ETPC).
+  </p>
+
+  <ul>
+    <li>przygotowanie projektów wniosków administracyjnych</li>
+    <li>pomoc w wypełnieniu formularza ETPC</li>
+    <li>opisanie i uporządkowanie stanu faktycznego</li>
+    <li>pomoc językowa i redakcyjna</li>
+    <li>informacja o procedurze i wymaganiach formalnych</li>
+  </ul>
+
+  <h2>Charakter pomocy</h2>
+  <p>
+    Pomoc ma charakter administracyjny i techniczny.
+    Nie stanowi porady prawnej ani reprezentacji przed sądami lub organami.
+  </p>
+</section>
+
+<!-- ================= UA ================= -->
+<section class="lang ua">
+  <h2>Сфера допомоги</h2>
+  <p>
+    Ми надаємо адміністративну та інформаційну допомогу
+    при підготовці заяв про мирне врегулювання спору
+    до органів Республіки Словенія, а також при формальній
+    підготовці скарг до Європейського суду з прав людини (ЄСПЛ).
+  </p>
+
+  <ul>
+    <li>підготовка проєктів адміністративних заяв</li>
+    <li>допомога у заповненні формуляра ЄСПЛ</li>
+    <li>опис та впорядкування фактичних обставин</li>
+    <li>мовна та редакційна допомога</li>
+    <li>інформація щодо процедури та формальних вимог</li>
+  </ul>
+
+  <h2>Характер допомоги</h2>
+  <p>
+    Допомога має адміністративний та технічний характер.
+    Вона не є юридичною консультацією та не передбачає представництва
+    в судах або перед органами влади.
+  </p>
+</section>
+
+<!-- ================= EN ================= -->
+<section class="lang en">
+  <h2>Scope of assistance</h2>
+  <p>
+    We provide administrative and informational support in the preparation
+    of applications for amicable settlement before the authorities of the Republic of Slovenia,
+    as well as formal assistance in preparing applications to the European Court of Human Rights (ECHR).
+  </p>
+
+  <ul>
+    <li>preparation of draft administrative applications</li>
+    <li>assistance with completing the ECHR application form</li>
+    <li>structuring and describing the factual background</li>
+    <li>linguistic and editorial assistance</li>
+    <li>information on procedures and formal requirements</li>
+  </ul>
+
+  <h2>Nature of the assistance</h2>
+  <p>
+    The assistance provided is administrative and technical in nature.
+    It does not constitute legal advice and does not include legal representation
+    before courts or authorities.
+  </p>
+</section>
+
+</main>
+
+<footer>
+  <p>
+    Informational notice: This website provides administrative and technical assistance only.
+    No legal advice or legal representation is offered.
+  </p>
+</footer>
+
+<script>
+  function setLang(lang) {
+    document.querySelectorAll('.lang').forEach(el => el.style.display = 'none');
+    document.querySelector('.' + lang).style.display = 'block';
+  }
+  setLang('pl'); // startujemy z językiem polskim
+</script>
+
+</body>
+</html>
