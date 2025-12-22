@@ -2,296 +2,170 @@
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
-<title> Prison Justice Pl</title>
+<title>Prison Justice Pl</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #f4f6f8;
-  color: #222;
-}
-
-/* ===== HEADER ===== */
-header {
-  min-height: 65vh;
-  background-image:
-    linear-gradient(rgba(20,30,50,0.75), rgba(20,30,50,0.75)),
-    url('tlo.jpg.png'); /* lokalny obraz */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  text-align: center;
-  color: #ffffff;
-  padding: 20px;
-}
-
-header h1 {
-  font-size: 36px;
-  margin-bottom: 10px;
-}
-
-header p {
-  font-size: 18px;
-  max-width: 720px;
-}
-
-/* ===== LANGUAGE BUTTONS ===== */
-nav {
-  margin-top: 20px;
-}
-
-nav button {
-  margin: 5px;
-  padding: 10px 16px;
-  border: none;
-  background: #d4af37;
-  color: #000;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-/* ===== CONTENT ===== */
-.section {
-  max-width: 900px;
-  margin: 30px auto;
-  background: #ffffff;
-  padding: 25px;
-  border-radius: 6px;
-}
-
-h2 {
-  color: #1f2a44;
-}
-
-/* ===== LANG SYSTEM ===== */
-.lang {
-  display: none;
-}
-
-.lang.active {
-  display: block;
-}
-
-/* ===== FOOTER ===== */
-footer {
-  text-align: center;
-  font-size: 14px;
-  color: #666;
-  padding: 20px;
-}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f4f6f8; color: #222; }
+header { min-height: 65vh; background-image: linear-gradient(rgba(20,30,50,0.75), rgba(20,30,50,0.75)), url('tlo.jpg.png'); background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: #fff; padding: 20px; }
+header h1 { font-size: 36px; margin-bottom: 10px; }
+header p { font-size: 18px; max-width: 720px; }
+.lang-selector { margin: 15px 0; }
+.lang-selector img { width: 40px; margin: 0 5px; cursor: pointer; border: 2px solid transparent; border-radius: 4px; }
+.lang-selector img.active { border-color: #d4af37; }
+nav { margin-top: 20px; }
+nav a { margin: 5px; padding: 10px 16px; background: #d4af37; color: #000; text-decoration: none; border-radius: 4px; font-weight: bold; }
+.section { max-width: 900px; margin: 30px auto; background: #fff; padding: 25px; border-radius: 6px; }
+h2 { color: #1f2a44; }
+.lang { display: none; }
+.lang.active { display: block; }
+footer { text-align: center; font-size: 14px; color: #666; padding: 20px; }
 </style>
-
 <script>
-function setLang(lang) {
-  document.querySelectorAll('.lang').forEach(function(el) {
-    el.classList.remove('active');
-  });
+function setLang(lang){
+  document.querySelectorAll('.lang').forEach(el => el.classList.remove('active'));
   document.getElementById(lang).classList.add('active');
+  document.querySelectorAll('.lang-selector img').forEach(img => img.classList.remove('active'));
+  document.getElementById('flag-'+lang).classList.add('active');
 }
+window.onload = () => { setLang('pl'); };
 </script>
 </head>
-
 <body>
 
 <header>
-  <h1> Prison Justice Pl </h1>
-  <p>
-    Assistance in amicable settlements and preparation of applications
-    related to violations of human rights
-  </p>
-
+  <h1>Prison Justice Pl</h1>
+  <p>„Miara ucywilizowania danego narodu jest jego podejście do skazańców.”</p>
+  <div class="lang-selector">
+    <img id="flag-pl" src="flagi/pl.png" alt="PL" onclick="setLang('pl')">
+    <img id="flag-ua" src="flagi/ua.png" alt="UA" onclick="setLang('ua')">
+    <img id="flag-en" src="flagi/en.png" alt="EN" onclick="setLang('en')">
+    <img id="flag-ru" src="flagi/ru.png" alt="RU" onclick="setLang('ru')">
+    <img id="flag-md" src="flagi/md.png" alt="MD" onclick="setLang('md')">
+    <img id="flag-ro" src="flagi/ro.png" alt="RO" onclick="setLang('ro')">
+  </div>
   <nav>
-    <button onclick="setLang('pl')">PL</button>
-    <button onclick="setLang('ua')">UA</button>
-    <button onclick="setLang('en')">EN</button>
+    <a href="#cennik">Cennik</a>
+    <a href="#documents">Dokumenty</a>
   </nav>
 </header>
 
-<!-- ===== POLSKI ===== -->
-<div id="pl" class="lang active">
+<!-- ===== LANGUAGES ===== -->
 
-  <div class="section">
-    <h2>Zakres pomocy</h2>
-    <p>
-      Świadczymy pomoc w sporządzaniu wniosków o polubowne rozwiązanie sporu
-      przed organami krajowymi, w szczególności w sprawach dotyczących
-      nieludzkiego lub poniżającego traktowania podczas odbywania kary
-      pozbawienia wolności.
-    </p>
-    <p>
-      Na podstawie danych przekazanych przez klienta przygotowujemy kompletne
-      wnioski do Europejskiego Trybunału Praw Człowieka (ETPC),
-      a także zapewniamy wsparcie w negocjacjach dotyczących odszkodowania.
-    </p>
-  </div>
-
-  <div class="section">
+<!-- POLSKI -->
+<div id="pl" class="lang">
+  <div class="section" id="cennik">
     <h2>Cennik</h2>
     <ul>
-      <li>
-        Wniosek o polubowne rozwiązanie sporu (organy krajowe – Słowenia):
-        <strong>50 EUR</strong> + koszty druku i wysyłki
-        <br>
-        <small>Średni czas do wypłaty środków: około 5 miesięcy</small>
-      </li>
-      <br>
-      <li>
-        Przygotowanie wniosku do Europejskiego Trybunału Praw Człowieka:
-        <strong>od 150 EUR</strong>
-        <br>
-        <small>
-          Postępowanie bardziej pracochłonne; czas rozpoznania sprawy
-          od 1 do 2 lat, przy potencjalnie znacznie wyższych kwotach
-          odszkodowania
-        </small>
-      </li>
+      <li>Wniosek o polubowne rozwiązanie sporu: <strong>50 EUR</strong> + koszty druku i wysyłki</li>
+      <li>Wniosek do ETPC: <strong>od 150 EUR</strong></li>
     </ul>
   </div>
-
-  <div class="section">
-    <h2>Pliki do pobrania</h2>
+  <div class="section" id="documents">
+    <h2>Dokumenty do pobrania</h2>
     <ul>
-      <li><a href="formularz_PL.pdf" download>Pobierz formularz PL</a></li>
-      <li><a href="formularz_UA.pdf" download>Pobierz formularz UA</a></li>
-      <li><a href="formularz_EN.pdf" download>Pobierz formularz EN</a></li>
+      <li><a href="formularz_PL.pdf" download>formularz_PL.pdf</a></li>
+      <li><a href="formularz_UA.pdf" download>formularz_UA.pdf</a></li>
+      <li><a href="formularz_EN.pdf" download>formularz_EN.pdf</a></li>
     </ul>
   </div>
-
-  <div class="section">
-    <h2>Kontakt</h2>
-    <p><strong>E-mail:</strong> 	contact@prison-justice.pl</p>
-    <p><strong>Telefon:</strong> +48 725 144 019</p>
-    <p><strong>WhatsApp / Telegram:</strong> +36 70 265 5296</p>
-  </div>
-
 </div>
 
-<!-- ===== ENGLISH ===== -->
+<!-- ENGLISH -->
 <div id="en" class="lang">
-
-  <div class="section">
-    <h2>Scope of assistance</h2>
-    <p>
-      We provide assistance in preparing amicable settlement applications
-      before national authorities, particularly in cases involving
-      inhuman or degrading treatment.
-    </p>
-    <p>
-      Based on information provided by the client, we prepare complete
-      applications to the European Court of Human Rights and assist
-      in compensation negotiations.
-    </p>
-  </div>
-
-  <div class="section">
+  <div class="section" id="cennik">
     <h2>Pricing</h2>
     <ul>
-      <li>
-        Amicable settlement application:
-        <strong>50 EUR</strong> + printing and delivery costs
-        <br>
-        <small>Average time to payment: approx. 5 months</small>
-      </li>
-      <br>
-      <li>
-        Application to the European Court of Human Rights:
-        <strong>from 150 EUR</strong>
-        <br>
-        <small>Processing time: 1–2 years</small>
-      </li>
+      <li>Amicable settlement application: <strong>50 EUR</strong></li>
+      <li>Application to ECHR: <strong>from 150 EUR</strong></li>
     </ul>
   </div>
-
-  <div class="section">
-    <h2>Download files</h2>
+  <div class="section" id="documents">
+    <h2>Download documents</h2>
     <ul>
-      <li><a href="formularz_PL.pdf" download>Download PDF PL</a></li>
-      <li><a href="formularz_UA.pdf" download>Download PDF UA</a></li>
-      <li><a href="formularz_EN.pdf" download>Download PDF EN</a></li>
+      <li><a href="formularz_PL.pdf" download>PDF PL</a></li>
+      <li><a href="formularz_UA.pdf" download>PDF UA</a></li>
+      <li><a href="formularz_EN.pdf" download>PDF EN</a></li>
     </ul>
   </div>
-
-  <div class="section">
-    <h2>Contact</h2>
-    <p><strong>Email:</strong> 	contact@prison-justice.pl</p>
-    <p><strong>Phone:</strong> +48 725 144 019</p>
-    <p><strong>WhatsApp / Telegram:</strong> +36 70 265 5296</p>
-  </div>
-
 </div>
 
-<!-- ===== UKRAINIAN ===== -->
+<!-- UKRAINIAN -->
 <div id="ua" class="lang">
-
-  <div class="section">
-    <h2>Сфера допомоги</h2>
-    <p>
-      Ми надаємо допомогу у підготовці заяв про дружнє врегулювання спору
-      перед національними органами, зокрема у справах щодо нелюдського
-      або такого, що принижує гідність, поводження.
-    </p>
-    <p>
-      На основі даних, наданих клієнтом, ми готуємо повні заяви
-      до Європейського суду з прав людини та допомагаємо
-      у переговорах щодо компенсації.
-    </p>
-  </div>
-
-  <div class="section">
+  <div class="section" id="cennik">
     <h2>Вартість</h2>
     <ul>
-      <li>
-        Дружнє врегулювання спору:
-        <strong>50 EUR</strong> + витрати на друк і відправлення
-        <br>
-        <small>Середній час: близько 5 місяців</small>
-      </li>
-      <br>
-      <li>
-        Заява до Європейського суду з прав людини:
-        <strong>від 150 EUR</strong>
-        <br>
-        <small>Тривалість розгляду: 1–2 роки</small>
-      </li>
+      <li>Дружнє врегулювання спору: <strong>50 EUR</strong></li>
+      <li>Заява до ЄСПЛ: <strong>від 150 EUR</strong></li>
     </ul>
   </div>
-
-  <div class="section">
-    <h2>Файли для завантаження</h2>
+  <div class="section" id="documents">
+    <h2>Документи для завантаження</h2>
     <ul>
-      <li><a href="formularz_PL.pdf" download>Завантажити PDF PL</a></li>
-      <li><a href="formularz_UA.pdf" download>Завантажити PDF UA</a></li>
-      <li><a href="formularz_EN.pdf" download>Завантажити PDF EN</a></li>
+      <li><a href="formularz_PL.pdf" download>PDF PL</a></li>
+      <li><a href="formularz_UA.pdf" download>PDF UA</a></li>
+      <li><a href="formularz_EN.pdf" download>PDF EN</a></li>
     </ul>
   </div>
-
-  <div class="section">
-    <h2>Контакт</h2>
-    <p><strong>Email:</strong> 	contact@prison-justice.pl</p>
-    <p><strong>Телефон:</strong> +48 725 144 019</p>
-    <p><strong>WhatsApp / Telegram:</strong> +36 70 265 5296</p>
-  </div>
-
 </div>
 
-<footer>
-  © Prison Justice Pl
-</footer>
+<!-- RU -->
+<div id="ru" class="lang">
+  <div class="section" id="cennik">
+    <h2>Цены</h2>
+    <ul>
+      <li>Претензия о мирном разрешении спора: <strong>50 EUR</strong></li>
+      <li>Претензия в ЕСПЧ: <strong>от 150 EUR</strong></li>
+    </ul>
+  </div>
+  <div class="section" id="documents">
+    <h2>Документы для скачивания</h2>
+    <ul>
+      <li><a href="formularz_PL.pdf" download>PDF PL</a></li>
+      <li><a href="formularz_UA.pdf" download>PDF UA</a></li>
+      <li><a href="formularz_EN.pdf" download>PDF EN</a></li>
+    </ul>
+  </div>
+</div>
 
+<!-- MD -->
+<div id="md" class="lang">
+  <div class="section" id="cennik">
+    <h2>Prețuri</h2>
+    <ul>
+      <li>Cerere de soluționare amiabilă: <strong>50 EUR</strong></li>
+      <li>Cerere la CEDO: <strong>de la 150 EUR</strong></li>
+    </ul>
+  </div>
+  <div class="section" id="documents">
+    <h2>Documente de descărcat</h2>
+    <ul>
+      <li><a href="formularz_PL.pdf" download>PDF PL</a></li>
+      <li><a href="formularz_UA.pdf" download>PDF UA</a></li>
+      <li><a href="formularz_EN.pdf" download>PDF EN</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- RO -->
+<div id="ro" class="lang">
+  <div class="section" id="cennik">
+    <h2>Prețuri</h2>
+    <ul>
+      <li>Cerere de soluționare amiabilă: <strong>50 EUR</strong></li>
+      <li>Cerere la CEDO: <strong>de la 150 EUR</strong></li>
+    </ul>
+  </div>
+  <div class="section" id="documents">
+    <h2>Documente de descărcat</h2>
+    <ul>
+      <li><a href="formularz_PL.pdf" download>PDF PL</a></li>
+      <li><a href="formularz_UA.pdf" download>PDF UA</a></li>
+      <li><a href="formularz_EN.pdf" download>PDF EN</a></li>
+    </ul>
+  </div>
+</div>
+
+<footer>© Prison Justice Pl</footer>
 </body>
 </html>
-
-
