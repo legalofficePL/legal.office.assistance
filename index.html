@@ -39,9 +39,17 @@ header h1 {
   margin: 20px auto;
 }
 
-/* języki */
-.lang { display: none; }
-.lang.active { display: block; }
+/* SEKCJE */
+.section {
+  max-width: 900px;
+  margin: 30px auto;
+  background: #fff;
+  padding: 25px;
+  border-radius: 6px;
+}
+
+/* JĘZYKI */
+[data-lang] { display: none; }
 
 /* FLAGI */
 nav.flags { margin-top: 20px; }
@@ -55,14 +63,33 @@ nav.flags img {
 nav.flags img.active {
   border-color: #d4af37;
 }
+
+a.btn {
+  display: inline-block;
+  padding: 10px 15px;
+  background:#d4af37;
+  color:#000;
+  text-decoration:none;
+  border-radius:4px;
+}
+
+footer {
+  text-align:center;
+  padding:20px;
+  font-size:14px;
+  color:#666;
+}
 </style>
 
 <script>
 function setLang(lang) {
-  document.querySelectorAll('.lang').forEach(el =>
-    el.classList.remove('active')
-  );
-  document.getElementById(lang).classList.add('active');
+  document.querySelectorAll('[data-lang]').forEach(el => {
+    el.style.display = 'none';
+  });
+
+  document.querySelectorAll('[data-lang="'+lang+'"]').forEach(el => {
+    el.style.display = 'block';
+  });
 
   document.querySelectorAll('nav.flags img').forEach(img =>
     img.classList.remove('active')
@@ -79,79 +106,71 @@ function setLang(lang) {
 
   <!-- CYTAT -->
   <blockquote class="quote">
-    <div id="pl" class="lang active">
+    <div data-lang="pl" style="display:block">
       „Miara ucywilizowania danego narodu jest jego podejście do osób pozbawionych wolności.”
       <br><small>Fiodor Dostojewski</small>
     </div>
 
-    <div id="ua" class="lang">
+    <div data-lang="ua">
       «Рівень цивілізованості нації визначається її ставленням до людей, позбавлених волі».
       <br><small>Федір Достоєвський</small>
     </div>
 
-    <div id="en" class="lang">
+    <div data-lang="en">
       “The degree of civilization of a nation is determined by its attitude toward prisoners.”
       <br><small>Fyodor Dostoevsky</small>
     </div>
 
-    <div id="ru" class="lang">
+    <div data-lang="ru">
       «Степень цивилизованности общества определяется его отношением к заключённым».
       <br><small>Фёдор Михайлович Достоевский</small>
     </div>
 
-    <div id="md" class="lang">
+    <div data-lang="md">
       „Gradul de civilizație al unei națiuni este determinat de atitudinea sa față de persoanele private de libertate.”
       <br><small>Fiodor Dostoievski</small>
     </div>
 
-    <div id="ro" class="lang">
+    <div data-lang="ro">
       „Gradul de civilizație al unei națiuni se măsoară prin atitudinea față de deținuți.”
       <br><small>Fiodor Dostoievski</small>
     </div>
   </blockquote>
 
   <!-- OPIS -->
-  <div>
-    <p id="pl-desc" class="lang active">
-      Specjalistyczna pomoc w przygotowaniu wniosków
-      o polubowne rozwiązanie sporu
-      przeciwko Zakładom Karnym w Republice Słowenii
-    </p>
+  <p data-lang="pl" style="display:block">
+    Specjalistyczna pomoc w przygotowaniu wniosków o polubowne rozwiązanie sporu
+    przeciwko Zakładom Karnym w Republice Słowenii
+  </p>
 
-    <p id="ua-desc" class="lang">
-      Спеціалізована допомога у підготовці заяв
-      щодо мирного врегулювання спорів
-      проти пенітенціарних установ у Словенії
-    </p>
+  <p data-lang="ua">
+    Спеціалізована допомога у підготовці заяв щодо мирного врегулювання спорів
+    проти пенітенціарних установ у Словенії
+  </p>
 
-    <p id="en-desc" class="lang">
-      Specialized assistance in preparing applications
-      for amicable settlement of disputes
-      against correctional facilities in Slovenia
-    </p>
+  <p data-lang="en">
+    Specialized assistance in preparing applications for amicable settlement
+    against correctional facilities in Slovenia
+  </p>
 
-    <p id="ru-desc" class="lang">
-      Специализированная помощь в подготовке заявлений
-      о мирном урегулировании споров
-      против пенитенциарных учреждений Словении
-    </p>
+  <p data-lang="ru">
+    Специализированная помощь в подготовке заявлений о мирном урегулировании споров
+    против пенитенциарных учреждений Словении
+  </p>
 
-    <p id="md-desc" class="lang">
-      Asistență specializată pentru pregătirea cererilor
-      de soluționare amiabilă a litigiilor
-      împotriva instituțiilor penitenciare din Slovenia
-    </p>
+  <p data-lang="md">
+    Asistență specializată pentru pregătirea cererilor de soluționare amiabilă
+    împotriva instituțiilor penitenciare din Slovenia
+  </p>
 
-    <p id="ro-desc" class="lang">
-      Asistență specializată în pregătirea cererilor
-      de soluționare amiabilă a litigiilor
-      împotriva instituțiilor penitenciare din Slovenia
-    </p>
-  </div>
+  <p data-lang="ro">
+    Asistență specializată în pregătirea cererilor de soluționare amiabilă
+    împotriva instituțiilor penitenciare din Slovenia
+  </p>
 
   <!-- FLAGI -->
   <nav class="flags">
-    <img src="pl.png" id="flag-pl" onclick="setLang('pl')" class="active" alt="PL">
+    <img src="pl.png" id="flag-pl" class="active" onclick="setLang('pl')" alt="PL">
     <img src="ua.png" id="flag-ua" onclick="setLang('ua')" alt="UA">
     <img src="en.png" id="flag-en" onclick="setLang('en')" alt="EN">
     <img src="ru.png" id="flag-ru" onclick="setLang('ru')" alt="RU">
@@ -160,8 +179,55 @@ function setLang(lang) {
   </nav>
 </header>
 
+<!-- ================= TREŚĆ ================= -->
+
+<div data-lang="pl" style="display:block">
+  <div class="section">
+    <h2>Główna specjalizacja – Republika Słowenii</h2>
+    <p>Przygotowujemy wnioski o polubowne rozwiązanie sporu przeciwko administracji Zakładów Karnych w Republice Słowenii.</p>
+  </div>
+</div>
+
+<div data-lang="ua">
+  <div class="section">
+    <h2>Головна спеціалізація – Республіка Словенія</h2>
+    <p>Ми готуємо заявки на дружнє врегулювання спорів проти адміністрації тюрем у Словенії.</p>
+  </div>
+</div>
+
+<div data-lang="en">
+  <div class="section">
+    <h2>Main Specialisation – Republic of Slovenia</h2>
+    <p>We prepare applications for amicable settlement against prison administrations in Slovenia.</p>
+  </div>
+</div>
+
+<div data-lang="ru">
+  <div class="section">
+    <h2>Основная специализация – Республика Словения</h2>
+    <p>Подготавливаем заявки на мирное урегулирование споров против администрации тюрем.</p>
+  </div>
+</div>
+
+<div data-lang="md">
+  <div class="section">
+    <h2>Specializare principală – Republica Slovenia</h2>
+    <p>Pregătim cereri pentru soluționarea amiabilă a litigiilor.</p>
+  </div>
+</div>
+
+<div data-lang="ro">
+  <div class="section">
+    <h2>Specializare principală – Republica Slovenia</h2>
+    <p>Pregătirea cererilor pentru soluționarea amiabilă a litigiilor.</p>
+  </div>
+</div>
+
+<footer>© Prison Justice PL</footer>
+
 </body>
 </html>
+
 
 
 
@@ -423,6 +489,7 @@ function setLang(lang) {
 
 </body>
 </html>
+
 
 
 
