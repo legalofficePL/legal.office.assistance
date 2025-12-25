@@ -39,9 +39,9 @@ header h1 {
   margin: 20px auto;
 }
 
-/* cytaty językowe */
-.lang-quote { display: none; }
-.lang-quote.active { display: inline; }
+/* języki */
+.lang { display: none; }
+.lang.active { display: block; }
 
 /* FLAGI */
 nav.flags { margin-top: 20px; }
@@ -59,10 +59,10 @@ nav.flags img.active {
 
 <script>
 function setLang(lang) {
-  document.querySelectorAll('.lang-quote').forEach(q =>
-    q.classList.remove('active')
+  document.querySelectorAll('.lang').forEach(el =>
+    el.classList.remove('active')
   );
-  document.querySelector('.lang-quote.' + lang).classList.add('active');
+  document.getElementById(lang).classList.add('active');
 
   document.querySelectorAll('nav.flags img').forEach(img =>
     img.classList.remove('active')
@@ -77,44 +77,79 @@ function setLang(lang) {
 <header>
   <h1>Prison Justice PL</h1>
 
+  <!-- CYTAT -->
   <blockquote class="quote">
-    <span class="lang-quote pl active">
+    <div id="pl" class="lang active">
       „Miara ucywilizowania danego narodu jest jego podejście do osób pozbawionych wolności.”
       <br><small>Fiodor Dostojewski</small>
-    </span>
+    </div>
 
-    <span class="lang-quote ua">
+    <div id="ua" class="lang">
       «Рівень цивілізованості нації визначається її ставленням до людей, позбавлених волі».
       <br><small>Федір Достоєвський</small>
-    </span>
+    </div>
 
-    <span class="lang-quote en">
+    <div id="en" class="lang">
       “The degree of civilization of a nation is determined by its attitude toward prisoners.”
       <br><small>Fyodor Dostoevsky</small>
-    </span>
+    </div>
 
-    <span class="lang-quote ru">
+    <div id="ru" class="lang">
       «Степень цивилизованности общества определяется его отношением к заключённым».
       <br><small>Фёдор Михайлович Достоевский</small>
-    </span>
+    </div>
 
-    <span class="lang-quote md">
+    <div id="md" class="lang">
       „Gradul de civilizație al unei națiuni este determinat de atitudinea sa față de persoanele private de libertate.”
       <br><small>Fiodor Dostoievski</small>
-    </span>
+    </div>
 
-    <span class="lang-quote ro">
+    <div id="ro" class="lang">
       „Gradul de civilizație al unei națiuni se măsoară prin atitudinea față de deținuți.”
       <br><small>Fiodor Dostoievski</small>
-    </span>
+    </div>
   </blockquote>
 
-  <p>
-    Specjalistyczna pomoc w przygotowaniu wniosków
-    o polubowne rozwiązanie sporu
-    przeciwko Zakładom Karnym w Republice Słowenii
-  </p>
+  <!-- OPIS -->
+  <div>
+    <p id="pl-desc" class="lang active">
+      Specjalistyczna pomoc w przygotowaniu wniosków
+      o polubowne rozwiązanie sporu
+      przeciwko Zakładom Karnym w Republice Słowenii
+    </p>
 
+    <p id="ua-desc" class="lang">
+      Спеціалізована допомога у підготовці заяв
+      щодо мирного врегулювання спорів
+      проти пенітенціарних установ у Словенії
+    </p>
+
+    <p id="en-desc" class="lang">
+      Specialized assistance in preparing applications
+      for amicable settlement of disputes
+      against correctional facilities in Slovenia
+    </p>
+
+    <p id="ru-desc" class="lang">
+      Специализированная помощь в подготовке заявлений
+      о мирном урегулировании споров
+      против пенитенциарных учреждений Словении
+    </p>
+
+    <p id="md-desc" class="lang">
+      Asistență specializată pentru pregătirea cererilor
+      de soluționare amiabilă a litigiilor
+      împotriva instituțiilor penitenciare din Slovenia
+    </p>
+
+    <p id="ro-desc" class="lang">
+      Asistență specializată în pregătirea cererilor
+      de soluționare amiabilă a litigiilor
+      împotriva instituțiilor penitenciare din Slovenia
+    </p>
+  </div>
+
+  <!-- FLAGI -->
   <nav class="flags">
     <img src="pl.png" id="flag-pl" onclick="setLang('pl')" class="active" alt="PL">
     <img src="ua.png" id="flag-ua" onclick="setLang('ua')" alt="UA">
@@ -127,6 +162,7 @@ function setLang(lang) {
 
 </body>
 </html>
+
 
 
 
@@ -387,6 +423,7 @@ function setLang(lang) {
 
 </body>
 </html>
+
 
 
 
