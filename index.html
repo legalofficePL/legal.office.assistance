@@ -313,39 +313,9 @@ document.addEventListener('DOMContentLoaded', () => {
                    contact@prison-justice.pl </footer>
 <footer>© Prison Justice PL</footer>
 </body>
-  <script>
-(function () {
-
-  function setLang(lang) {
-    localStorage.setItem('siteLang', lang);
-
-    document.querySelectorAll('[data-lang]').forEach(el => {
-      el.style.display = 'none';
-    });
-
-    document.querySelectorAll('[data-lang="' + lang + '"]').forEach(el => {
-      el.style.display = '';
-    });
-
-    document.querySelectorAll('.flags img').forEach(img => {
-      img.classList.remove('active');
-    });
-
-    const flag = document.getElementById('flag-' + lang);
-    if (flag) flag.classList.add('active');
-  }
-
-  window.setLang = setLang;
-
-  document.addEventListener('DOMContentLoaded', function () {
-    const savedLang = localStorage.getItem('siteLang') || 'pl';
-    setLang(savedLang);
-  });
-
-})();
-</script>
 
 </html>
+
 
 
 
