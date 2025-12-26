@@ -124,14 +124,13 @@ document.addEventListener('DOMContentLoaded', () => setLang('pl'));
   </div>
 
   <h3>Wyślij wiadomość</h3>
-  <form action="mailto:contact@prison-justice.pl" method="post" enctype="text/plain">
-    <textarea
-  name="message"
-  placeholder="Wpisz treść wiadomości..."
-  autocomplete="off"
-></textarea>
-    <button type="submit">Wyślij</button>
-  </form>
+  <form action="contact.php" method="post">
+  <input name="name" placeholder="Imię">
+  <input name="email" placeholder="Twój email">
+  <textarea name="message" placeholder="Treść wiadomości"></textarea>
+  <button type="submit">Wyślij</button>
+</form>
+
 
   <a href="index.html" class="btn">← Strona główna</a>
 </div>
@@ -236,5 +235,6 @@ document.addEventListener('DOMContentLoaded', () => setLang('pl'));
 
 </body>
 </html>
+
 
 
