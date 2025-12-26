@@ -56,14 +56,6 @@ nav.flags img.active {
   font-weight: bold;
 }
 
-.contact-list a:hover {
-  text-decoration: underline;
-}
-
-form {
-  margin-top: 25px;
-}
-
 form textarea {
   width: 100%;
   min-height: 120px;
@@ -88,13 +80,6 @@ form button {
   color: #fff;
   text-decoration: none;
   border-radius: 4px;
-}
-
-footer {
-  text-align: center;
-  padding: 20px;
-  font-size: 14px;
-  color: #666;
 }
 </style>
 
@@ -128,122 +113,69 @@ document.addEventListener('DOMContentLoaded', () => setLang('pl'));
 
 <div class="section">
 
-<!-- ================= PL ================= -->
+<!-- PL -->
 <div data-lang="pl">
   <h2>Dane kontaktowe</h2>
   <div class="contact-list">
-    <a href="tel:+48725144019">📞 Telefon: +48 725 144 019</a>
+    <a href="tel:+48725144019">📞 +48 725 144 019</a>
     <a href="https://wa.me/48725144019" target="_blank">📱 WhatsApp</a>
     <a href="https://t.me/+36702655296" target="_blank">✈️ Telegram</a>
-    <a href="mailto:contact@prison-justice.pl">📧 contact@prison-justice.pl</a>
-    <a href="https://www.facebook.com/profile.php?id=61585160703540" target="_blank">📘 Facebook</a>
+    <a href="https://facebook.com/profile.php?id=61585160703540" target="_blank">📘 Facebook</a>
   </div>
 
   <h3>Wyślij wiadomość</h3>
-  <form onsubmit="alert('Wiadomość została wysłana'); return false;">
-    <textarea placeholder="Wpisz treść wiadomości..."></textarea>
+  <form action="mailto:contact@prison-justice.pl" method="post" enctype="text/plain">
+    <textarea name="message" placeholder="Wpisz treść wiadomości..."></textarea>
     <button type="submit">Wyślij</button>
   </form>
 
-  <a href="index.html" class="btn">← Powrót na stronę główną</a>
+  <a href="index.html" class="btn">← Strona główna</a>
 </div>
-  <!-- ================= UA ================= -->
-<div data-lang="en">
-  <h2>Contact details</h2>
-  <div class="contact-list">
-    <a href="tel:+48725144019">📞 Телефон</a>
-    <a href="https://wa.me/48725144019" target="_blank">📱 WhatsApp</a>
-    <a href="https://t.me/+36702655296" target="_blank">✈️ Telegram</a>
-    <a href="mailto:contact@prison-justice.pl">📧 Email</a>
-    <a href="https://www.facebook.com/profile.php?id=61585160703540" target="_blank">📘 Facebook</a>
-  </div>
 
-  <h3>Send a message</h3>
-  <form onsubmit="alert('Message sent'); return false;">
-    <textarea placeholder="Type your message..."></textarea>
+<!-- UA -->
+<div data-lang="ua">
+  <h2>Контакти</h2>
+  <form action="mailto:contact@prison-justice.pl" method="post" enctype="text/plain">
+    <textarea name="message" placeholder="Введіть повідомлення..."></textarea>
+    <button type="submit">Надіслати</button>
+  </form>
+</div>
+
+<!-- EN -->
+<div data-lang="en">
+  <h2>Contact</h2>
+  <form action="mailto:contact@prison-justice.pl" method="post" enctype="text/plain">
+    <textarea name="message" placeholder="Type your message..."></textarea>
     <button type="submit">Send</button>
   </form>
-
-  <a href="index.html" class="btn">← Back to home</a>
 </div>
 
-<!-- ================= EN ================= -->
-<div data-lang="en">
-  <h2>Contact details</h2>
-  <div class="contact-list">
-    <a href="tel:+48725144019">📞 Phone</a>
-    <a href="https://wa.me/48725144019" target="_blank">📱 WhatsApp</a>
-    <a href="https://t.me/+36702655296" target="_blank">✈️ Telegram</a>
-    <a href="mailto:contact@prison-justice.pl">📧 Email</a>
-    <a href="https://www.facebook.com/profile.php?id=61585160703540" target="_blank">📘 Facebook</a>
-  </div>
-
-  <h3>Send a message</h3>
-  <form onsubmit="alert('Message sent'); return false;">
-    <textarea placeholder="Type your message..."></textarea>
-    <button type="submit">Send</button>
+<!-- RU -->
+<div data-lang="ru">
+  <h2>Контакты</h2>
+  <form action="mailto:contact@prison-justice.pl" method="post" enctype="text/plain">
+    <textarea name="message" placeholder="Введите сообщение..."></textarea>
+    <button type="submit">Отправить</button>
   </form>
-
-  <a href="index.html" class="btn">← Back to home</a>
 </div>
-    <!-- ================= RU ================= -->
-<div data-lang="en">
-  <h2>Contact details</h2>
-  <div class="contact-list">
-    <a href="tel:+48725144019">📞 Телефон</a>
-    <a href="https://wa.me/48725144019" target="_blank">📱 WhatsApp</a>
-    <a href="https://t.me/+36702655296" target="_blank">✈️ Telegram</a>
-    <a href="mailto:contact@prison-justice.pl">📧 Email</a>
-    <a href="https://www.facebook.com/profile.php?id=61585160703540" target="_blank">📘 Facebook</a>
-  </div>
 
-  <h3>Send a message</h3>
-  <form onsubmit="alert('Message sent'); return false;">
-    <textarea placeholder="Type your message..."></textarea>
-    <button type="submit">Send</button>
+<!-- MD -->
+<div data-lang="md">
+  <h2>Contact</h2>
+  <form action="mailto:contact@prison-justice.pl" method="post" enctype="text/plain">
+    <textarea name="message" placeholder="Introduceți mesajul..."></textarea>
+    <button type="submit">Trimite</button>
   </form>
-
-  <a href="index.html" class="btn">← Back to home</a>
 </div>
-    <!-- ================= MD ================= -->
-<div data-lang="en">
-  <h2>Contact details</h2>
-  <div class="contact-list">
-    <a href="tel:+48725144019">📞 Telefon</a>
-    <a href="https://wa.me/48725144019" target="_blank">📱 WhatsApp</a>
-    <a href="https://t.me/+36702655296" target="_blank">✈️ Telegram</a>
-    <a href="mailto:contact@prison-justice.pl">📧 Email</a>
-    <a href="https://www.facebook.com/profile.php?id=61585160703540" target="_blank">📘 Facebook</a>
-  </div>
 
-  <h3>Send a message</h3>
-  <form onsubmit="alert('Message sent'); return false;">
-    <textarea placeholder="Type your message..."></textarea>
-    <button type="submit">Send</button>
+<!-- RO -->
+<div data-lang="ro">
+  <h2>Contact</h2>
+  <form action="mailto:contact@prison-justice.pl" method="post" enctype="text/plain">
+    <textarea name="message" placeholder="Introduceți mesajul..."></textarea>
+    <button type="submit">Trimite</button>
   </form>
-
-  <a href="index.html" class="btn">← Back to home</a>
 </div>
-      <!-- ================= RO ================= -->
-<div data-lang="en">
-  <h2>Contact details</h2>
-  <div class="contact-list">
-    <a href="tel:+48725144019">📞 Telefon</a>
-    <a href="https://wa.me/48725144019" target="_blank">📱 WhatsApp</a>
-    <a href="https://t.me/+36702655296" target="_blank">✈️ Telegram</a>
-    <a href="mailto:contact@prison-justice.pl">📧 Email</a>
-    <a href="https://www.facebook.com/profile.php?id=61585160703540" target="_blank">📘 Facebook</a>
-  </div>
-
-  <h3>Send a message</h3>
-  <form onsubmit="alert('Message sent'); return false;">
-    <textarea placeholder="Type your message..."></textarea>
-    <button type="submit">Send</button>
-  </form>
-
-  <a href="index.html" class="btn">← Back to home</a>
-</div>
-
 
 </div>
 
