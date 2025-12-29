@@ -193,18 +193,27 @@ function addPrison() {
   div.className = 'box';
   div.innerHTML = `
     <h3>Więzienie</h3>
-    <label>Nazwa więzienia</label><input name="Więzienie">
+
+    <label>Nazwa więzienia</label>
+    <input name="Więzienie">
+
     <label>Data pobytu (od – do)</label>
     <input type="date" name="Pobyt od">
     <input type="date" name="Pobyt do">
 
     <div class="cells"></div>
-    <button type="button" onclick="addCell(this)">+ Dodaj kolejną celę (max 4)</button>
-  `;
-  document.getElementById('prisons').appendChild(div);
-  addCell(div.querySelector('button'));
 
+    <button type="button" onclick="addCell(this)">
+      + Dodaj kolejną celę (max 4)
+    </button>
+  `;
+
+  document.getElementById('prisons').appendChild(div);
+
+  // ⬇️ AUTOMATYCZNIE DODAJ PIERWSZĄ CELĘ
+  addCell(div.querySelector('button'));
 }
+
 
 
 
@@ -255,6 +264,7 @@ showStep();
 
 </body>
 </html>
+
 
 
 
