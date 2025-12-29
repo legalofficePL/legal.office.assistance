@@ -181,6 +181,7 @@ function prev() {
   showStep();
 }
 
+  
 
 function addPrison() {
   const div = document.createElement('div');
@@ -208,6 +209,13 @@ function addPrison() {
   addCell(div.querySelector('button'));
 }
 
+<script>
+function addFirstPrison() {
+  addPrison(); // dodaje pierwsze więzienie
+  document.getElementById('addFirstBtn').style.display = 'none';
+  document.getElementById('addNextBtn').style.display = 'inline-block';
+}
+</script>
 
 
 
@@ -258,6 +266,7 @@ showStep();
 
 </body>
 </html>
+
 
 
 
