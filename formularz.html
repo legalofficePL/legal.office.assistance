@@ -180,6 +180,13 @@ function prev() {
   if (step > 0) step--;
   showStep();
 }
+<script>
+function addFirstPrison() {
+  addPrison(); // dodaje pierwsze więzienie
+  document.getElementById('addFirstBtn').style.display = 'none';
+  document.getElementById('addNextBtn').style.display = 'inline-block';
+}
+</script>
 
 function addPrison() {
   const div = document.createElement('div');
@@ -248,6 +255,7 @@ showStep();
 
 </body>
 </html>
+
 
 
 
