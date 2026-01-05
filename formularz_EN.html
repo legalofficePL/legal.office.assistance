@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prison Justice – Formularz</title>
+<title>Prison Justice – Form</title>
 
 <style>
 body{font-family:Arial,sans-serif;background:#f4f4f4;margin:0}
@@ -26,15 +26,14 @@ button{padding:10px 16px;margin-top:15px;cursor:pointer}
 <div class="container">
 
 <div class="top-bar">
-<select onchange="setLang(this.value)">
+<select id="langSelect">
   <option value="pl">PL</option>
   <option value="en">EN</option>
   <option value="ua">UA</option>
   <option value="ru">RU</option>
   <option value="ro">RO / MD</option>
 </select>
-
-<a href="index.html">← Powrót na stronę główną</a>
+<a href="index.html">← Home</a>
 </div>
 
 <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
@@ -44,34 +43,37 @@ button{padding:10px 16px;margin-top:15px;cursor:pointer}
 <!-- STEP 1 -->
 <div class="step active">
 <h2 data-t="personal"></h2>
-<label data-t="firstName"></label><input name="f1_first_name">
-<label data-t="lastName"></label><input name="f2_last_name">
-<label data-t="address"></label><textarea name="f3_address"></textarea>
-<label>EMŠO</label><input name="f4_emso">
-<label>Davčna številka</label><input name="f5_tax_number">
+<label data-t="firstName"></label><input name="first_name">
+<label data-t="lastName"></label><input name="last_name">
+<label data-t="address"></label><textarea name="address"></textarea>
+<label data-t="emso"></label><input name="emso">
+<label data-t="tax"></label><input name="tax">
 </div>
 
 <!-- STEP 2 -->
 <div class="step">
 <h2 data-t="contact"></h2>
-<label data-t="phone"></label><input name="f6_phone">
-<label>Email</label><input name="f7_email">
+<label data-t="phone"></label><input name="phone">
+<label>Email</label><input name="email">
 </div>
 
 <!-- STEP 3 -->
 <div class="step">
 <h2 data-t="case"></h2>
-<label data-t="caseNo"></label><input name="f8_case_number">
-<label data-t="judgmentDate"></label><input type="date" name="f9_judgment_date">
-<label data-t="courtCity"></label><input name="f10_court_city">
+<label data-t="caseNo"></label><input name="case_no">
+<label data-t="judgmentDate"></label><input type="date" name="judgment_date">
+<label data-t="courtCity"></label><input name="court_city">
 </div>
 
 <!-- STEP 4 -->
 <div class="step">
 <h2 data-t="language"></h2>
-<label data-t="languageUnderstood"></label><input name="f11_language">
+<label data-t="languageUnderstood"></label><input name="language_understood">
 <label data-t="regulations"></label>
-<select name="f12_regulations"><option value="YES">YES</option><option value="NO">NO</option></select>
+<select name="regulations">
+<option value="YES" data-t="yes"></option>
+<option value="NO" data-t="no"></option>
+</select>
 </div>
 
 <!-- STEP 5 -->
@@ -79,7 +81,7 @@ button{padding:10px 16px;margin-top:15px;cursor:pointer}
 <h2 data-t="prisons"></h2>
 <p data-t="describeFirst"></p>
 <div id="prisons"></div>
-<button type="button" onclick="addPrison()" data-t="addFirst"></button>
+<button type="button" onclick="addPrison()" data-t="addPrison"></button>
 </div>
 
 <!-- STEP 6 -->
@@ -102,53 +104,87 @@ button{padding:10px 16px;margin-top:15px;cursor:pointer}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <script>
-/* === TRANSLATIONS === */
+/* ================= TRANSLATIONS ================= */
 const T={
-pl:{personal:"Dane osobowe",firstName:"Imię",lastName:"Nazwisko",address:"Adres",
+pl:{
+personal:"Dane osobowe",firstName:"Imię",lastName:"Nazwisko",address:"Adres",
+emso:"EMŠO",tax:"Davčna / PESEL / NIP",
 contact:"Kontakt",phone:"Telefon",
 case:"Dane sprawy",caseNo:"Sygnatura",judgmentDate:"Data wyroku",courtCity:"Miasto sądu",
 language:"Język",languageUnderstood:"Język zrozumiały",regulations:"Czy otrzymałeś regulamin?",
-prisons:"Więzienia i cele",describeFirst:"Opisz pierwsze więzienie i jego cele",
-addFirst:"➕ Dodaj więzienie",preview:"Podgląd",
-back:"Wstecz",next:"Dalej"},
-en:{personal:"Personal data",firstName:"First name",lastName:"Last name",address:"Address",
+yes:"TAK",no:"NIE",
+prisons:"Więzienia i cele",describeFirst:"Opisz więzienia i cele",
+addPrison:"➕ Dodaj więzienie",
+prison:"Więzienie",prisonName:"Nazwa więzienia",
+cell:"Cela",cellNumber:"Numer celi",people:"Osoby",size:"Powierzchnia",description:"Opis",
+preview:"Podgląd",back:"Wstecz",next:"Dalej"
+},
+en:{
+personal:"Personal data",firstName:"First name",lastName:"Last name",address:"Address",
+emso:"EMŠO",tax:"Tax / PESEL / NIP",
 contact:"Contact",phone:"Phone",
 case:"Case details",caseNo:"Case number",judgmentDate:"Judgment date",courtCity:"Court city",
 language:"Language",languageUnderstood:"Language understood",regulations:"Have you received regulations?",
-prisons:"Prisons and cells",describeFirst:"Describe the first prison and its cells",
-addFirst:"➕ Add prison",preview:"Preview",
-back:"Back",next:"Next"},
-ua:{personal:"Особисті дані",firstName:"Імʼя",lastName:"Прізвище",address:"Адреса",
+yes:"YES",no:"NO",
+prisons:"Prisons and cells",describeFirst:"Describe prisons and cells",
+addPrison:"➕ Add prison",
+prison:"Prison",prisonName:"Prison name",
+cell:"Cell",cellNumber:"Cell number",people:"People",size:"Size",description:"Description",
+preview:"Preview",back:"Back",next:"Next"
+},
+ua:{
+personal:"Особисті дані",firstName:"Імʼя",lastName:"Прізвище",address:"Адреса",
+emso:"EMŠO",tax:"Податковий номер",
 contact:"Контакт",phone:"Телефон",
 case:"Дані справи",caseNo:"Номер справи",judgmentDate:"Дата вироку",courtCity:"Місто суду",
 language:"Мова",languageUnderstood:"Зрозуміла мова",regulations:"Отримали регламент?",
-prisons:"Вʼязниці та камери",describeFirst:"Опишіть першу вʼязницю",
-addFirst:"➕ Додати вʼязницю",preview:"Перегляд",
-back:"Назад",next:"Далі"},
-ru:{personal:"Личные данные",firstName:"Имя",lastName:"Фамилия",address:"Адрес",
+yes:"ТАК",no:"НІ",
+prisons:"Вʼязниці та камери",describeFirst:"Опишіть вʼязниці та камери",
+addPrison:"➕ Додати вʼязницю",
+prison:"Вʼязниця",prisonName:"Назва вʼязниці",
+cell:"Камера",cellNumber:"Номер камери",people:"Осіб",size:"Розмір",description:"Опис",
+preview:"Перегляд",back:"Назад",next:"Далі"
+},
+ru:{
+personal:"Личные данные",firstName:"Имя",lastName:"Фамилия",address:"Адрес",
+emso:"EMŠO",tax:"Налоговый номер",
 contact:"Контакты",phone:"Телефон",
 case:"Данные дела",caseNo:"Номер дела",judgmentDate:"Дата приговора",courtCity:"Город суда",
 language:"Язык",languageUnderstood:"Понятный язык",regulations:"Получили регламент?",
-prisons:"Тюрьмы и камеры",describeFirst:"Опишите первую тюрьму",
-addFirst:"➕ Добавить тюрьму",preview:"Просмотр",
-back:"Назад",next:"Далее"},
-ro:{personal:"Date personale",firstName:"Prenume",lastName:"Nume",address:"Adresă",
+yes:"ДА",no:"НЕТ",
+prisons:"Тюрьмы и камеры",describeFirst:"Опишите тюрьмы и камеры",
+addPrison:"➕ Добавить тюрьму",
+prison:"Тюрьма",prisonName:"Название тюрьмы",
+cell:"Камера",cellNumber:"Номер камеры",people:"Человек",size:"Размер",description:"Описание",
+preview:"Просмотр",back:"Назад",next:"Далее"
+},
+ro:{
+personal:"Date personale",firstName:"Prenume",lastName:"Nume",address:"Adresă",
+emso:"EMŠO",tax:"Cod fiscal",
 contact:"Contact",phone:"Telefon",
 case:"Datele cauzei",caseNo:"Număr dosar",judgmentDate:"Data sentinței",courtCity:"Oraș instanță",
 language:"Limba",languageUnderstood:"Limba înțeleasă",regulations:"Ați primit regulament?",
-prisons:"Închisori și celule",describeFirst:"Descrieți prima închisoare",
-addFirst:"➕ Adaugă închisoare",preview:"Previzualizare",
-back:"Înapoi",next:"Înainte"}
+yes:"DA",no:"NU",
+prisons:"Închisori și celule",describeFirst:"Descrieți închisori și celule",
+addPrison:"➕ Adaugă închisoare",
+prison:"Închisoare",prisonName:"Numele închisorii",
+cell:"Celulă",cellNumber:"Număr celulă",people:"Persoane",size:"Dimensiune",description:"Descriere",
+preview:"Previzualizare",back:"Înapoi",next:"Înainte"
+}
 };
 
+let lang="pl";
 function setLang(l){
+lang=l;
 document.querySelectorAll("[data-t]").forEach(e=>e.textContent=T[l][e.dataset.t]);
 }
+document.getElementById("langSelect").onchange=e=>setLang(e.target.value);
 setLang("pl");
 
-/* === FORM LOGIC === */
+/* ================= FORM LOGIC ================= */
 let step=0, prisonCount=0;
 const steps=document.querySelectorAll(".step");
+
 function showStep(){
 steps.forEach((s,i)=>s.classList.toggle("active",i===step));
 document.getElementById("progressBar").style.width=((step+1)/steps.length*100)+"%";
@@ -159,32 +195,36 @@ function prev(){ if(step>0) step--; showStep(); }
 
 function addPrison(){
 prisonCount++;
+const L=T[lang];
 const p=document.createElement("div");
 p.className="box";
-p.innerHTML=`<h3>Prison ${prisonCount}</h3>
-<label>Name</label><input name="p${prisonCount}_name">
+p.innerHTML=`
+<h3>${L.prison} ${prisonCount}</h3>
+<label>${L.prisonName}</label>
+<input name="prison_${prisonCount}_name">
 <div class="cells"></div>
-<button type="button" onclick="addCell(this,${prisonCount})">+ Cell</button>`;
+<button type="button" onclick="addCell(this,${prisonCount})">+ ${L.cell}</button>`;
 document.getElementById("prisons").appendChild(p);
 }
 
 function addCell(btn,p){
+const L=T[lang];
 const cells=btn.parentElement.querySelector(".cells");
-if(cells.children.length>=4){alert("Max 4 cells");return;}
+if(cells.children.length>=4){alert("Max 4");return;}
 const cNo=cells.children.length+1;
-cells.innerHTML+=`
+cells.insertAdjacentHTML("beforeend",`
 <div class="box">
-<h4>Cell ${p}.${cNo}</h4>
-<input name="p${p}_c${cNo}_number" placeholder="Cell number">
-<input name="p${p}_c${cNo}_people" placeholder="People">
-<input name="p${p}_c${cNo}_size" placeholder="Size">
-<textarea name="p${p}_c${cNo}_desc" placeholder="Description"></textarea>
-</div>`;
+<h4>${L.cell} ${p}.${cNo}</h4>
+<input name="p${p}_c${cNo}_number" placeholder="${L.cellNumber}">
+<input name="p${p}_c${cNo}_people" placeholder="${L.people}">
+<input name="p${p}_c${cNo}_size" placeholder="${L.size}">
+<textarea name="p${p}_c${cNo}_desc" placeholder="${L.description}"></textarea>
+</div>`);
 }
 
 function buildPreview(){
 let out="";
-new FormData(form).forEach((v,k)=>out+=k+" = "+v+"\n");
+new FormData(form).forEach((v,k)=>out+=k+": "+v+"\n");
 preview.textContent=out;
 }
 
@@ -207,6 +247,5 @@ location.href="mailto:?subject=Form&body="+encodeURIComponent(preview.textConten
 
 showStep();
 </script>
-
 </body>
 </html>
