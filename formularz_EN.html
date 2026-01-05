@@ -1,41 +1,206 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Formularz – dane osadzenia</title>
+<title>Prison Form</title>
+
 <style>
-body { font-family: Arial, sans-serif; background:#f4f4f4; margin:0; padding:0; }
-.container { max-width:800px; margin:20px auto; background:#fff; padding:20px; border-radius:6px; }
-.step { display:none; }
-.step.active { display:block; }
-label { display:block; margin-top:12px; font-weight:bold; }
-input, textarea, select { width:100%; padding:8px; margin-top:4px; }
-textarea { min-height:80px; }
-button { padding:10px 16px; cursor:pointer; margin-top:15px; }
-.box { border:1px solid #ccc; padding:12px; margin-top:15px; border-radius:4px; }
-.progress { height:8px; background:#ddd; border-radius:4px; margin-bottom:20px; }
-.progress-bar { height:8px; background:#4caf50; width:0%; border-radius:4px; }
-.preview { white-space:pre-wrap; background:#f9f9f9; padding:12px; }
-.instructions { background:#eef; padding:10px; margin-top:20px; border-radius:4px; }
+body{font-family:Arial;background:#f4f4f4;margin:0}
+.container{max-width:900px;margin:20px auto;background:#fff;padding:20px;border-radius:6px}
+.step{display:none}
+.step.active{display:block}
+label{display:block;margin-top:10px;font-weight:bold}
+input,textarea,select{width:100%;padding:8px;margin-top:4px}
+textarea{min-height:70px}
+button{padding:10px 16px;margin-top:15px;cursor:pointer}
+.box{border:1px solid #ccc;padding:12px;margin-top:15px;border-radius:4px}
+.progress{height:8px;background:#ddd;border-radius:4px;margin-bottom:20px}
+.progress-bar{height:8px;background:#4caf50;width:0%;border-radius:4px}
+.preview{white-space:pre-wrap;background:#f9f9f9;padding:12px}
+footer{text-align:center;margin-top:25px;font-size:14px;color:#555}
 </style>
 </head>
+
 <body>
 <div class="container">
 
-<select id="langSelect" onchange="setLang(this.value)" aria-label="Select language">
-  <option value="pl">PL</option>
+<select onchange="setLang(this.value)">
   <option value="en">EN</option>
   <option value="ua">UA</option>
   <option value="ru">RU</option>
-  <option value="ro">RO / MD</option>
+  <option value="ro">RO</option>
 </select>
 
-<div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+<div class="progress"><div class="progress-bar" id="bar"></div></div>
 
 <form id="form">
 
-<!-- STEP 1: Personal data -->
+<!-- STEP 1 -->
 <div class="step active">
   <h2 data-t="personal"></h2>
-  <label data-t="first
+  <label data-t="firstName"></label><input data-k="first_name">
+  <label data-t="lastName"></label><input data-k="last_name">
+  <label data-t="address"></label><textarea data-k="address"></textarea>
+</div>
+
+<!-- STEP 2 -->
+<div class="step">
+  <h2 data-t="contact"></h2>
+  <label data-t="phone"></label><input data-k="phone">
+  <label>Email</label><input type="email" data-k="email">
+</div>
+
+<!-- STEP 3 -->
+<div class="step">
+  <h2 data-t="case"></h2>
+  <label data-t="caseNo"></label><input data-k="case_no">
+  <label data-t="judgmentDate"></label><input type="date" data-k="judgment_date">
+  <label data-t="courtCity"></label><input data-k="court_city">
+</div>
+
+<!-- STEP 4 -->
+<div class="step">
+  <h2 data-t="language"></h2>
+  <label data-t="languageUnderstood"></label><input data-k="language">
+  <label data-t="regulations"></label>
+  <select data-k="regulations">
+    <option value="yes" data-t="yes"></option>
+    <option value="no" data-t="no"></option>
+  </select>
+</div>
+
+<!-- STEP 5 -->
+<div class="step">
+  <h2 data-t="prisons"></h2>
+  <p data-t="describeFirst"></p>
+  <div id="prisons"></div>
+  <button type="button" onclick="addPrison()" data-t="addFirst"></button>
+</div>
+
+<!-- STEP 6 -->
+<div class="step">
+  <h2 data-t="preview"></h2>
+  <div class="preview" id="preview"></div>
+  <button type="button" onclick="downloadTXT()" data-t="download"></button>
+  <button type="button" onclick="sendMail()" data-t="send"></button>
+</div>
+
+<div>
+  <button type="button" onclick="prev()" data-t="back"></button>
+  <button type="button" onclick="next()" data-t="next"></button>
+</div>
+
+</form>
+
+<footer data-t="instruction"></footer>
+
+</div>
+
+<script>
+let step=0, prisonCount=0;
+const steps=document.querySelectorAll(".step");
+const bar=document.getElementById("bar");
+const prisons=document.getElementById("prisons");
+
+function show(){
+  steps.forEach((s,i)=>s.classList.toggle("active",i===step));
+  bar.style.width=((step+1)/steps.length*100)+"%";
+  if(step===steps.length-1) buildPreview();
+}
+function next(){if(step<steps.length-1){step++;show()}}
+function prev(){if(step>0){step--;show()}}
+
+function addPrison(){
+  prisonCount++;
+  const p=document.createElement("div");
+  p.className="box";
+  p.dataset.prison=prisonCount;
+  p.innerHTML=`
+    <h3>${T[lang].prison} ${prisonCount}</h3>
+    <label>${T[lang].prisonName}</label>
+    <input data-k="prison_${prisonCount}_name">
+    <div class="cells"></div>
+    <button type="button" onclick="addCell(this,${prisonCount})">${T[lang].addCell}</button>
+  `;
+  prisons.appendChild(p);
+  addCell(p.querySelector("button"),prisonCount);
+}
+
+function addCell(btn,pno){
+  const cells=btn.parentElement.querySelector(".cells");
+  if(cells.children.length>=4)return alert(T[lang].maxCells);
+  const cno=cells.children.length+1;
+  const c=document.createElement("div");
+  c.className="box";
+  c.innerHTML=`
+    <h4>${T[lang].cell} ${pno}.${cno}</h4>
+    <label>${T[lang].cellNo}</label><input data-k="cell_${pno}_${cno}_no">
+    <label>${T[lang].people}</label><input data-k="cell_${pno}_${cno}_people">
+    <label>${T[lang].size}</label><input data-k="cell_${pno}_${cno}_size">
+    <label>${T[lang].desc}</label><textarea data-k="cell_${pno}_${cno}_desc"></textarea>
+  `;
+  cells.appendChild(c);
+}
+
+function buildPreview(){
+  let t="";
+  document.querySelectorAll("[data-k]").forEach(e=>{
+    if(e.value) t+=`${e.dataset.k}=${e.value}\n`;
+  });
+  preview.textContent=t;
+}
+
+function downloadTXT(){
+  const b=new Blob([preview.textContent]);
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(b);
+  a.download="form.txt";
+  a.click();
+}
+
+function sendMail(){
+  location.href="mailto:?subject=Form&body="+encodeURIComponent(preview.textContent);
+}
+
+let lang="en";
+const T={
+en:{
+personal:"Personal data",firstName:"First name",lastName:"Last name",address:"Address",
+contact:"Contact",phone:"Phone",
+case:"Case details",caseNo:"Case number",judgmentDate:"Judgment date",courtCity:"Court city",
+language:"Language and regulations",languageUnderstood:"Language understood",regulations:"Have you received regulations?",
+yes:"YES",no:"NO",
+prisons:"Prisons and cells",describeFirst:"Describe first prison and its cells",
+prison:"Prison",prisonName:"Prison name",
+cell:"Cell",cellNo:"Cell number",people:"People",size:"Size",desc:"Description",
+addFirst:"Add prison",addCell:"Add cell",maxCells:"Maximum 4 cells",
+preview:"Preview",download:"Download TXT",send:"Send by email",
+back:"Back",next:"Next",
+instruction:"Please complete the form carefully. You can add up to 4 cells per prison."
+},
+ua:{
+personal:"Особисті дані",firstName:"Імʼя",lastName:"Прізвище",address:"Адреса",
+contact:"Контакт",phone:"Телефон",
+case:"Дані справи",caseNo:"Номер справи",judgmentDate:"Дата вироку",courtCity:"Місто суду",
+language:"Мова та регламент",languageUnderstood:"Зрозуміла мова",regulations:"Чи отримали регламент?",
+yes:"ТАК",no:"НІ",
+prisons:"Вʼязниці та камери",describeFirst:"Опишіть першу вʼязницю та камери",
+prison:"Вʼязниця",prisonName:"Назва вʼязниці",
+cell:"Камера",cellNo:"Номер камери",people:"Кількість осіб",size:"Площа",desc:"Опис",
+addFirst:"Додати вʼязницю",addCell:"Додати камеру",maxCells:"Максимум 4 камери",
+preview:"Перегляд",download:"Завантажити TXT",send:"Надіслати email",
+back:"Назад",next:"Далі",
+instruction:"Будь ласка, уважно заповніть форму. Максимум 4 камери на одну вʼязницю."
+}
+};
+
+function setLang(l){
+  lang=l;
+  document.querySelectorAll("[data-t]").forEach(e=>e.textContent=T[l][e.dataset.t]);
+}
+setLang("en");
+show();
+</script>
+</body>
+</html>
