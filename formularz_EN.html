@@ -34,7 +34,6 @@ button{padding:10px 16px;margin-top:15px;cursor:pointer}
     <option value="ru">RU</option>
     <option value="ro">RO / MD</option>
   </select>
-
   <button type="button" onclick="location.href='index.html'">← Strona główna</button>
 </div>
 
@@ -44,24 +43,21 @@ button{padding:10px 16px;margin-top:15px;cursor:pointer}
 
 <form id="form">
 
-<!-- STEP 1 -->
 <div class="step active">
   <h2 data-t="personal"></h2>
   <label data-t="firstName"></label><input name="f1_first_name">
   <label data-t="lastName"></label><input name="f2_last_name">
   <label data-t="address"></label><textarea name="f3_address"></textarea>
-  <label>EMŠO-Twój Słoweński nr PESEL– Slovenian Personal Identification Number– Словенський Персональний Ідентифікаційний Номер– Словенский Персональный Идентификационный Номер– Număr Personal De Identificare Sloven </label><input name="f4_emso">
-  <label>Davčna številka / Twój NIP słowński / Your Slovenian TIN / Твій Словенський ІПН / Твій Словенський ИНН / CUI Tău Sloven  </label><input name="f5_tax">
+  <label>EMŠO</label><input name="f4_emso">
+  <label>Davčna številka</label><input name="f5_tax">
 </div>
 
-<!-- STEP 2 -->
 <div class="step">
   <h2 data-t="contact"></h2>
   <label data-t="phone"></label><input name="f6_phone">
   <label>Email</label><input name="f7_email">
 </div>
 
-<!-- STEP 3 -->
 <div class="step">
   <h2 data-t="case"></h2>
   <label data-t="caseNo"></label><input name="f8_case">
@@ -69,35 +65,31 @@ button{padding:10px 16px;margin-top:15px;cursor:pointer}
   <label data-t="courtCity"></label><input name="f10_city">
 </div>
 
-<!-- STEP 4 -->
 <div class="step">
   <h2 data-t="language"></h2>
   <label data-t="languageUnderstood"></label><input name="f11_lang">
   <label data-t="regulations"></label>
   <select name="f12_reg">
-    <option value="YES">YES</option>
-    <option value="NO">NO</option>
+    <option>YES</option>
+    <option>NO</option>
   </select>
 </div>
 
-<!-- STEP 5 -->
 <div class="step">
   <h2 data-t="prisons"></h2>
   <p data-t="describeFirst"></p>
   <div id="prisons"></div>
-  <button type="button" onclick="addPrison()" data-t="addFirst"></button>
+
+  <!-- PRZYCISK DODAWANIA WIĘZIENIA UKRYTY -->
+  <button type="button" onclick="addPrison()" style="display:none"></button>
 </div>
 
-<!-- STEP 6 -->
 <div class="step">
   <h2 data-t="preview"></h2>
   <div class="preview" id="preview"></div>
-  <button type="button" onclick="downloadTXT()">TXT</button>
-  <button type="button" onclick="downloadPDF()">PDF</button>
-  <button type="button" onclick="sendMail()">MAIL</button>
 </div>
 
-<div style="margin-top:20px">
+<div>
   <button type="button" onclick="prev()" data-t="back"></button>
   <button type="button" onclick="next()" data-t="next"></button>
 </div>
@@ -105,123 +97,115 @@ button{padding:10px 16px;margin-top:15px;cursor:pointer}
 </form>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
 <script>
+let currentLang="pl";
+let step=0, prisonCount=0;
+const steps=document.querySelectorAll(".step");
+
 const T={
-pl:{personal:"Dane osobowe",firstName:"Imię",lastName:"Nazwisko",address:"Adres: ulica,nr domu,nr mieszkania, kod pocztowy, miasto, kraj ",
+pl:{
+personal:"Dane osobowe",firstName:"Imię",lastName:"Nazwisko",address:"Adres",
 contact:"Kontakt",phone:"Telefon",
-case:"Dane sprawy",caseNo:"Sygnatura, numer sprawy wyroku ze Słowenii",judgmentDate:"Data wyroku, kiedy zapadł",courtCity:"Miasto Sądu skazukjącego w Słowenii",
-language:"Język",languageUnderstood:"Język zrozumiały dla ciebie",regulations:"Czy otrzymałeś regulamin więzienny w języku który rozumiesz?",
+case:"Dane sprawy",caseNo:"Sygnatura sprawy",judgmentDate:"Data wyroku",courtCity:"Miasto sądu",
+language:"Język",languageUnderstood:"Język zrozumiały",regulations:"Czy otrzymałeś regulamin?",
 prisons:"Więzienia i cele",describeFirst:"Opisz pierwsze więzienie i jego cele",
-addFirst:"➕ Dodaj więzienie",preview:"Podgląd",
-back:"Wstecz",next:"Dalej"},
-en:{personal:"Personal data",firstName:"First name",lastName:"Last name",address:"Address, street, house number, apartment number, postal code, city, country",
+preview:"Podgląd",back:"Wstecz",next:"Dalej",
+prison:"Więzienie",prisonName:"Nazwa",
+cell:"Cela",cellNumber:"Numer celi",cellPeople:"Ilość osób",cellSize:"Metraż",cellDesc:"Opis",addCell:"+ Cela"
+},
+en:{
+personal:"Personal data",firstName:"First name",lastName:"Last name",address:"Address",
 contact:"Contact",phone:"Phone",
-case:"Case details",caseNo:"Case number, case number of the judgment from Slovenia",judgmentDate:"Date of the judgment, when it was issued",courtCity:"City Of The Convicting Court In Slovenia (e.g.: Ljubljana, Kresko, etc",
-language:"Language",languageUnderstood:"Language Understandable To You",regulations:"Did You Receive The Prison Regulations In A Language You Understand?",
+case:"Case details",caseNo:"Case number",judgmentDate:"Judgment date",courtCity:"Court city",
+language:"Language",languageUnderstood:"Language understood",regulations:"Did you receive regulations?",
 prisons:"Prisons and cells",describeFirst:"Describe the first prison and its cells",
-addFirst:"➕ Add prison",preview:"Preview",
-back:"Back",next:"Next"},
-ua:{personal:"Особисті дані",firstName:"Імʼя",lastName:"Прізвище",address:"Адреса, вулиця, номер будинку, номер квартири, поштовий індекс, місто, країна",
+preview:"Preview",back:"Back",next:"Next",
+prison:"Prison",prisonName:"Name",
+cell:"Cell",cellNumber:"Cell number",cellPeople:"Number of people",cellSize:"Area",cellDesc:"Description",addCell:"+ Cell"
+},
+ua:{
+personal:"Особисті дані",firstName:"Імʼя",lastName:"Прізвище",address:"Адреса",
 contact:"Контакт",phone:"Телефон",
-case:"Дані справи",caseNo:"Номер справи, номер справи рішення зі Словенії",judgmentDate:"дата винесення рішення, коли воно було ухвалене",courtCity:"Місто Суду, Що Виніс Обвинувальний Вирок У Словенії (наприклад: Ljubljana, Kresko тощо)",
-language:"Мова",languageUnderstood:"Мова, Зрозуміла Для Тебе",regulations:"Чи Отримав Ти Тюремний Регламент Мовою, Яку Ти Розумієш?",
+case:"Дані справи",caseNo:"Номер справи",judgmentDate:"Дата рішення",courtCity:"Місто суду",
+language:"Мова",languageUnderstood:"Зрозуміла мова",regulations:"Чи отримав регламент?",
 prisons:"Вʼязниці та камери",describeFirst:"Опишіть першу вʼязницю",
-addFirst:"➕ Додати вʼязницю",preview:"Перегляд",
-back:"Назад",next:"Далі"},
-ru:{personal:"Личные данные",firstName:"Имя",lastName:"Фамилия",address:"Адрес, улица, номер дома, номер квартиры, почтовый индекс, город, страна",
+preview:"Перегляд",back:"Назад",next:"Далі",
+prison:"Вʼязниця",prisonName:"Назва",
+cell:"Камера",cellNumber:"Номер камери",cellPeople:"Кількість осіб",cellSize:"Площа",cellDesc:"Опис",addCell:"+ Камера"
+},
+ru:{
+personal:"Личные данные",firstName:"Имя",lastName:"Фамилия",address:"Адрес",
 contact:"Контакты",phone:"Телефон",
-case:"Данные дела",caseNo:"Номер дела, номер дела решения из Словении",judgmentDate:"Дата вынесения решения, когда оно было принято ",courtCity:"Город Суда, Вынесшего Обвинительный Приговор В Словении (например: Ljubljana, Kresko и т.д.)",
-language:"Язык",languageUnderstood:"Язык, Понятный Для Тебя",regulations:"Получил Ли Ты Тюремный Регламент На Языке, Который Ты Понимаешь?",
+case:"Данные дела",caseNo:"Номер дела",judgmentDate:"Дата решения",courtCity:"Город суда",
+language:"Язык",languageUnderstood:"Понятный язык",regulations:"Получил регламент?",
 prisons:"Тюрьмы и камеры",describeFirst:"Опишите первую тюрьму",
-addFirst:"➕ Добавить тюрьму",preview:"Просмотр",
-back:"Назад",next:"Далее"},
-ro:{personal:"Date personale",firstName:"Prenume",lastName:"Nume",address:"Adresă, stradă, număr de casă, număr de apartament, cod poștal, oraș,",
+preview:"Просмотр",back:"Назад",next:"Далее",
+prison:"Тюрьма",prisonName:"Название",
+cell:"Камера",cellNumber:"Номер камеры",cellPeople:"Количество человек",cellSize:"Площадь",cellDesc:"Описание",addCell:"+ Камера"
+},
+ro:{
+personal:"Date personale",firstName:"Prenume",lastName:"Nume",address:"Adresă",
 contact:"Contact",phone:"Telefon",
-case:"Datele cauzei",caseNo:"Număr dosar, numărul dosarului hotărârii din Slovenia",judgmentDate:"Data hotărârii, când a fost pronunțată",courtCity:"Orașul Instanței Care A Pronunțat Sentința De Condamnare În Slovenia (de ex.: Ljubljana, Kresko etc.)",
-language:"Limba",languageUnderstood:"Limbă Ușor De Înțeles Pentru Tine",regulations:"Ai Primit Regulamentul Penitenciar Într-o Limbă Pe Care O Înțelegi?",
+case:"Datele cauzei",caseNo:"Număr dosar",judgmentDate:"Data hotărârii",courtCity:"Oraș instanță",
+language:"Limba",languageUnderstood:"Limba înțeleasă",regulations:"Ai primit regulamentul?",
 prisons:"Închisori și celule",describeFirst:"Descrieți prima închisoare",
-addFirst:"➕ Adaugă închisoare",preview:"Previzualizare",
-back:"Înapoi",next:"Înainte"}
+preview:"Previzualizare",back:"Înapoi",next:"Înainte",
+prison:"Închisoare",prisonName:"Nume",
+cell:"Celulă",cellNumber:"Număr celulă",cellPeople:"Număr persoane",cellSize:"Suprafață",cellDesc:"Descriere",addCell:"+ Celulă"
+}
 };
 
 function setLang(l){
+  currentLang=l;
   document.querySelectorAll("[data-t]").forEach(e=>{
     e.textContent=T[l][e.dataset.t];
   });
 }
-setLang("pl");
-
-let step=0, prisonCount=0;
-const steps=document.querySelectorAll(".step");
 
 function showStep(){
   steps.forEach((s,i)=>s.classList.toggle("active",i===step));
   document.getElementById("progressBar").style.width=((step+1)/steps.length*100)+"%";
-  if(step===steps.length-1) buildPreview();
+  if(step===4 && prisonCount===0) addPrison();
 }
+
 function next(){ if(step<steps.length-1){step++;showStep();} }
 function prev(){ if(step>0){step--;showStep();} }
 
 function addPrison(){
+  if(prisonCount>=1) return;
   prisonCount++;
+  const l=currentLang;
   const p=document.createElement("div");
   p.className="box";
   p.innerHTML=`
-    <h3>Więzienie ${prisonCount}</h3>
-    <label>Nazwa</label><input name="p${prisonCount}_name">
+    <h3>${T[l].prison} 1</h3>
+    <label>${T[l].prisonName}</label>
+    <input name="p1_name">
     <div class="cells"></div>
-    <button type="button" onclick="addCell(this,${prisonCount})">+ Cela</button>
+    <button type="button" onclick="addCell(this,1)">${T[l].addCell}</button>
   `;
   document.getElementById("prisons").appendChild(p);
 }
 
 function addCell(btn,p){
+  const l=currentLang;
   const cells=btn.parentElement.querySelector(".cells");
-  if(cells.children.length>=4){alert("Max 4 cele");return;}
+  if(cells.children.length>=4) return;
   const n=cells.children.length+1;
   cells.innerHTML+=`
     <div class="box">
-      <h4>Cela ${p}.${n}</h4>
-      <input name="p${p}_c${n}_number" placeholder="Numer celi">
-      <input name="p${p}_c${n}_people" placeholder="Ilość osób">
-      <input name="p${p}_c${n}_size" placeholder="Metraż">
-      <textarea name="p${p}_c${n}_desc" placeholder="Opis"></textarea>
+      <h4>${T[l].cell} ${p}.${n}</h4>
+      <input placeholder="${T[l].cellNumber}">
+      <input placeholder="${T[l].cellPeople}">
+      <input placeholder="${T[l].cellSize}">
+      <textarea placeholder="${T[l].cellDesc}"></textarea>
     </div>
   `;
 }
 
-function buildPreview(){
-  let out="";
-  new FormData(form).forEach((v,k)=>out+=k+" = "+v+"\n");
-  preview.textContent=out;
-}
-
-function downloadTXT(){
-  const b=new Blob([preview.textContent],{type:"text/plain"});
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(b);a.download="form.txt";a.click();
-}
-
-function downloadPDF(){
-  const {jsPDF}=window.jspdf;
-  const pdf=new jsPDF();
-  pdf.text(preview.textContent,10,10);
-  pdf.save("form.pdf");
-}
-
-function sendMail(){
-  location.href="mailto:?subject=Formularz&body="+encodeURIComponent(preview.textContent);
-}
-
+setLang("pl");
 showStep();
 </script>
 
 </body>
 </html>
-
-
-
-
-
