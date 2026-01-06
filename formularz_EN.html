@@ -48,7 +48,8 @@ button{padding:10px 16px;margin-top:15px;cursor:pointer}
   <label data-t="firstName"></label><input name="f1_first_name">
   <label data-t="lastName"></label><input name="f2_last_name">
   <label data-t="address"></label><textarea name="f3_address"></textarea>
-  <label>EMŠO-Twój Słoweński nr PESEL– Slovenian Personal Identification Number– Словенський Персональний Ідентифікаційний Номер– Словенский Персональный Идентификационный Номер– Număr Personal De Identificare Sloven </label><input name="f4_emso"> <label>Davčna številka / Twój NIP słowński / Your Slovenian TIN / Твій Словенський ІПН / Твій Словенський ИНН / CUI Tău Sloven </label><input name="f5_tax">
+  <label>EMŠO</label><input name="f4_emso">
+  <label>Davčna številka</label><input name="f5_tax">
 </div>
 
 <div class="step">
@@ -105,7 +106,8 @@ const T={
 pl:{
 personal:"Dane osobowe",firstName:"Imię",lastName:"Nazwisko",address:"Adres",
 contact:"Kontakt",phone:"Telefon",
-case:"Dane sprawy",caseNo:"Sygnatura, numer sprawy wyroku ze Słowenii",judgmentDate:"Data wyroku, kiedy zapadł",courtCity:"Miasto Sądu skazukjącego w Słowenii", language:"Język",languageUnderstood:"Język zrozumiały dla ciebie",regulations:"Czy otrzymałeś regulamin więzienny w języku który rozumiesz?",
+case:"Dane sprawy",caseNo:"Sygnatura sprawy",judgmentDate:"Data wyroku",courtCity:"Miasto sądu",
+language:"Język",languageUnderstood:"Język zrozumiały",regulations:"Czy otrzymałeś regulamin?",
 prisons:"Więzienia i cele",describeFirst:"Opisz pierwsze więzienie i jego cele",
 preview:"Podgląd",back:"Wstecz",next:"Dalej",
 prison:"Więzienie",prisonName:"Nazwa",
@@ -114,7 +116,8 @@ cell:"Cela",cellNumber:"Numer celi",cellPeople:"Ilość osób",cellSize:"Metraż
 en:{
 personal:"Personal data",firstName:"First name",lastName:"Last name",address:"Address",
 contact:"Contact",phone:"Phone",
-case:"Case details",caseNo:"Case number, case number of the judgment from Slovenia",judgmentDate:"Date of the judgment, when it was issued",courtCity:"City Of The Convicting Court In Slovenia (e.g.: Ljubljana, Kresko, etc", language:"Language",languageUnderstood:"Language Understandable To You",regulations:"Did You Receive The Prison Regulations In A Language You Understand?,
+case:"Case details",caseNo:"Case number",judgmentDate:"Judgment date",courtCity:"Court city",
+language:"Language",languageUnderstood:"Language understood",regulations:"Did you receive regulations?",
 prisons:"Prisons and cells",describeFirst:"Describe the first prison and its cells",
 preview:"Preview",back:"Back",next:"Next",
 prison:"Prison",prisonName:"Name",
@@ -123,7 +126,8 @@ cell:"Cell",cellNumber:"Cell number",cellPeople:"Number of people",cellSize:"Are
 ua:{
 personal:"Особисті дані",firstName:"Імʼя",lastName:"Прізвище",address:"Адреса",
 contact:"Контакт",phone:"Телефон",
-case:"Дані справи",caseNo:"Номер справи, номер справи рішення зі Словенії",judgmentDate:"дата винесення рішення, коли воно було ухвалене",courtCity:"Місто Суду, Що Виніс Обвинувальний Вирок У Словенії (наприклад: Ljubljana, Kresko тощо)", language:"Мова",languageUnderstood:"Мова, Зрозуміла Для Тебе",regulations:"Чи Отримав Ти Тюремний Регламент Мовою, Яку Ти Розумієш?",
+case:"Дані справи",caseNo:"Номер справи",judgmentDate:"Дата рішення",courtCity:"Місто суду",
+language:"Мова",languageUnderstood:"Зрозуміла мова",regulations:"Чи отримав регламент?",
 prisons:"Вʼязниці та камери",describeFirst:"Опишіть першу вʼязницю",
 preview:"Перегляд",back:"Назад",next:"Далі",
 prison:"Вʼязниця",prisonName:"Назва",
@@ -132,7 +136,8 @@ cell:"Камера",cellNumber:"Номер камери",cellPeople:"Кільк�
 ru:{
 personal:"Личные данные",firstName:"Имя",lastName:"Фамилия",address:"Адрес",
 contact:"Контакты",phone:"Телефон",
-case:"Данные дела",,caseNo:"Номер дела, номер дела решения из Словении",judgmentDate:"Дата вынесения решения, когда оно было принято ",courtCity:"Город Суда, Вынесшего Обвинительный Приговор В Словении (например: Ljubljana, Kresko и т.д.)", language:"Язык",languageUnderstood:"Язык, Понятный Для Тебя",regulations:"Получил Ли Ты Тюремный Регламент На Языке, Который Ты Понимаешь?",
+case:"Данные дела",caseNo:"Номер дела",judgmentDate:"Дата решения",courtCity:"Город суда",
+language:"Язык",languageUnderstood:"Понятный язык",regulations:"Получил регламент?",
 prisons:"Тюрьмы и камеры",describeFirst:"Опишите первую тюрьму",
 preview:"Просмотр",back:"Назад",next:"Далее",
 prison:"Тюрьма",prisonName:"Название",
@@ -141,7 +146,8 @@ cell:"Камера",cellNumber:"Номер камеры",cellPeople:"Колич�
 ro:{
 personal:"Date personale",firstName:"Prenume",lastName:"Nume",address:"Adresă",
 contact:"Contact",phone:"Telefon",
-case:"Datele cauzei",caseNo:"Număr dosar, numărul dosarului hotărârii din Slovenia",judgmentDate:"Data hotărârii, când a fost pronunțată",courtCity:"Orașul Instanței Care A Pronunțat Sentința De Condamnare În Slovenia (de ex.: Ljubljana, Kresko etc.)", language:"Limba",languageUnderstood:"Limbă Ușor De Înțeles Pentru Tine",regulations:"Ai Primit Regulamentul Penitenciar Într-o Limbă Pe Care O Înțelegi?",
+case:"Datele cauzei",caseNo:"Număr dosar",judgmentDate:"Data hotărârii",courtCity:"Oraș instanță",
+language:"Limba",languageUnderstood:"Limba înțeleasă",regulations:"Ai primit regulamentul?",
 prisons:"Închisori și celule",describeFirst:"Descrieți prima închisoare",
 preview:"Previzualizare",back:"Înapoi",next:"Înainte",
 prison:"Închisoare",prisonName:"Nume",
@@ -203,4 +209,3 @@ showStep();
 
 </body>
 </html>
-
