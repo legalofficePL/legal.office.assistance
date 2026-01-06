@@ -43,47 +43,43 @@ button{padding:10px 16px;margin-top:15px;cursor:pointer}
 
 <form id="form">
 
+<!-- STEP 1 -->
 <div class="step active">
   <h2 data-t="personal"></h2>
-  <label data-t="firstName"></label><input name="f1_first_name">
-  <label data-t="lastName"></label><input name="f2_last_name">
-  <label data-t="address"></label><textarea name="f3_address"></textarea>
-  <label>EMŠO</label><input name="f4_emso">
-  <label>Davčna številka</label><input name="f5_tax">
+  <label data-t="firstName"></label><input name="first_name">
+  <label data-t="lastName"></label><input name="last_name">
+  <label data-t="address"></label><textarea name="address"></textarea>
 </div>
 
+<!-- STEP 2 -->
 <div class="step">
   <h2 data-t="contact"></h2>
-  <label data-t="phone"></label><input name="f6_phone">
-  <label>Email</label><input name="f7_email">
+  <label data-t="phone"></label><input name="phone">
+  <label>Email</label><input name="email">
 </div>
 
+<!-- STEP 3 -->
 <div class="step">
   <h2 data-t="case"></h2>
-  <label data-t="caseNo"></label><input name="f8_case">
-  <label data-t="judgmentDate"></label><input type="date" name="f9_date">
-  <label data-t="courtCity"></label><input name="f10_city">
+  <label data-t="caseNo"></label><input name="case_no">
+  <label data-t="judgmentDate"></label><input type="date" name="judgment_date">
+  <label data-t="courtCity"></label><input name="court_city">
 </div>
 
+<!-- STEP 4 -->
 <div class="step">
   <h2 data-t="language"></h2>
-  <label data-t="languageUnderstood"></label><input name="f11_lang">
-  <label data-t="regulations"></label>
-  <select name="f12_reg">
-    <option>YES</option>
-    <option>NO</option>
-  </select>
+  <label data-t="languageUnderstood"></label><input name="lang_understood">
 </div>
 
+<!-- STEP 5 -->
 <div class="step">
   <h2 data-t="prisons"></h2>
   <p data-t="describeFirst"></p>
   <div id="prisons"></div>
-
-  <!-- PRZYCISK DODAWANIA WIĘZIENIA UKRYTY -->
-  <button type="button" onclick="addPrison()" style="display:none"></button>
 </div>
 
+<!-- STEP 6 -->
 <div class="step">
   <h2 data-t="preview"></h2>
   <div class="preview" id="preview"></div>
@@ -99,7 +95,8 @@ button{padding:10px 16px;margin-top:15px;cursor:pointer}
 
 <script>
 let currentLang="pl";
-let step=0, prisonCount=0;
+let step=0;
+let prisonCount=0;
 const steps=document.querySelectorAll(".step");
 
 const T={
@@ -107,7 +104,7 @@ pl:{
 personal:"Dane osobowe",firstName:"Imię",lastName:"Nazwisko",address:"Adres",
 contact:"Kontakt",phone:"Telefon",
 case:"Dane sprawy",caseNo:"Sygnatura sprawy",judgmentDate:"Data wyroku",courtCity:"Miasto sądu",
-language:"Język",languageUnderstood:"Język zrozumiały",regulations:"Czy otrzymałeś regulamin?",
+language:"Język",languageUnderstood:"Język zrozumiały",
 prisons:"Więzienia i cele",describeFirst:"Opisz pierwsze więzienie i jego cele",
 preview:"Podgląd",back:"Wstecz",next:"Dalej",
 prison:"Więzienie",prisonName:"Nazwa",
@@ -117,41 +114,11 @@ en:{
 personal:"Personal data",firstName:"First name",lastName:"Last name",address:"Address",
 contact:"Contact",phone:"Phone",
 case:"Case details",caseNo:"Case number",judgmentDate:"Judgment date",courtCity:"Court city",
-language:"Language",languageUnderstood:"Language understood",regulations:"Did you receive regulations?",
+language:"Language",languageUnderstood:"Language understood",
 prisons:"Prisons and cells",describeFirst:"Describe the first prison and its cells",
 preview:"Preview",back:"Back",next:"Next",
 prison:"Prison",prisonName:"Name",
 cell:"Cell",cellNumber:"Cell number",cellPeople:"Number of people",cellSize:"Area",cellDesc:"Description",addCell:"+ Cell"
-},
-ua:{
-personal:"Особисті дані",firstName:"Імʼя",lastName:"Прізвище",address:"Адреса",
-contact:"Контакт",phone:"Телефон",
-case:"Дані справи",caseNo:"Номер справи",judgmentDate:"Дата рішення",courtCity:"Місто суду",
-language:"Мова",languageUnderstood:"Зрозуміла мова",regulations:"Чи отримав регламент?",
-prisons:"Вʼязниці та камери",describeFirst:"Опишіть першу вʼязницю",
-preview:"Перегляд",back:"Назад",next:"Далі",
-prison:"Вʼязниця",prisonName:"Назва",
-cell:"Камера",cellNumber:"Номер камери",cellPeople:"Кількість осіб",cellSize:"Площа",cellDesc:"Опис",addCell:"+ Камера"
-},
-ru:{
-personal:"Личные данные",firstName:"Имя",lastName:"Фамилия",address:"Адрес",
-contact:"Контакты",phone:"Телефон",
-case:"Данные дела",caseNo:"Номер дела",judgmentDate:"Дата решения",courtCity:"Город суда",
-language:"Язык",languageUnderstood:"Понятный язык",regulations:"Получил регламент?",
-prisons:"Тюрьмы и камеры",describeFirst:"Опишите первую тюрьму",
-preview:"Просмотр",back:"Назад",next:"Далее",
-prison:"Тюрьма",prisonName:"Название",
-cell:"Камера",cellNumber:"Номер камеры",cellPeople:"Количество человек",cellSize:"Площадь",cellDesc:"Описание",addCell:"+ Камера"
-},
-ro:{
-personal:"Date personale",firstName:"Prenume",lastName:"Nume",address:"Adresă",
-contact:"Contact",phone:"Telefon",
-case:"Datele cauzei",caseNo:"Număr dosar",judgmentDate:"Data hotărârii",courtCity:"Oraș instanță",
-language:"Limba",languageUnderstood:"Limba înțeleasă",regulations:"Ai primit regulamentul?",
-prisons:"Închisori și celule",describeFirst:"Descrieți prima închisoare",
-preview:"Previzualizare",back:"Înapoi",next:"Înainte",
-prison:"Închisoare",prisonName:"Nume",
-cell:"Celulă",cellNumber:"Număr celulă",cellPeople:"Număr persoane",cellSize:"Suprafață",cellDesc:"Descriere",addCell:"+ Celulă"
 }
 };
 
@@ -165,42 +132,55 @@ function setLang(l){
 function showStep(){
   steps.forEach((s,i)=>s.classList.toggle("active",i===step));
   document.getElementById("progressBar").style.width=((step+1)/steps.length*100)+"%";
-  if(step===4 && prisonCount===0) addPrison();
+
+  if(step===4 && prisonCount===0){
+    addPrison();
+  }
+  if(step===steps.length-1){
+    buildPreview();
+  }
 }
 
 function next(){ if(step<steps.length-1){step++;showStep();} }
 function prev(){ if(step>0){step--;showStep();} }
 
 function addPrison(){
-  if(prisonCount>=1) return;
-  prisonCount++;
+  prisonCount=1;
   const l=currentLang;
-  const p=document.createElement("div");
-  p.className="box";
-  p.innerHTML=`
-    <h3>${T[l].prison} 1</h3>
-    <label>${T[l].prisonName}</label>
-    <input name="p1_name">
-    <div class="cells"></div>
-    <button type="button" onclick="addCell(this,1)">${T[l].addCell}</button>
+  document.getElementById("prisons").innerHTML=`
+    <div class="box">
+      <h3>${T[l].prison} 1</h3>
+      <label>${T[l].prisonName}</label>
+      <input name="prison_name">
+      <div class="cells"></div>
+      <button type="button" onclick="addCell(this)">${T[l].addCell}</button>
+    </div>
   `;
-  document.getElementById("prisons").appendChild(p);
 }
 
-function addCell(btn,p){
+function addCell(btn){
   const l=currentLang;
   const cells=btn.parentElement.querySelector(".cells");
   if(cells.children.length>=4) return;
   const n=cells.children.length+1;
   cells.innerHTML+=`
     <div class="box">
-      <h4>${T[l].cell} ${p}.${n}</h4>
-      <input placeholder="${T[l].cellNumber}">
-      <input placeholder="${T[l].cellPeople}">
-      <input placeholder="${T[l].cellSize}">
-      <textarea placeholder="${T[l].cellDesc}"></textarea>
+      <h4>${T[l].cell} 1.${n}</h4>
+      <input name="cell_${n}_number" placeholder="${T[l].cellNumber}">
+      <input name="cell_${n}_people" placeholder="${T[l].cellPeople}">
+      <input name="cell_${n}_size" placeholder="${T[l].cellSize}">
+      <textarea name="cell_${n}_desc" placeholder="${T[l].cellDesc}"></textarea>
     </div>
   `;
+}
+
+function buildPreview(){
+  const form=document.getElementById("form");
+  let out="";
+  new FormData(form).forEach((v,k)=>{
+    if(v.trim()!=="") out+=k+": "+v+"\n";
+  });
+  document.getElementById("preview").textContent=out || "— brak danych —";
 }
 
 setLang("pl");
