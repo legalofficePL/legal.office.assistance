@@ -3,73 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Formularz – dane osadzenia</title>
+<title>Formularz klienta – Prison Justice PL</title>
+<meta name="description" content="Formularz klienta Prison Justice PL. Wypełnij dane osobowe, informacje o sprawie i więzieniach. Po wysłaniu otrzymasz JSON i PDF z danymi do dalszego przetwarzania.">
+
+<!-- CDN do jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
-body {
-  font-family: Arial, sans-serif;
-  background: #f4f4f4;
-  margin: 0;
-  padding: 0;
-}
-
-.container {
-  max-width: 800px;
-  margin: 20px auto;
-  background: #fff;
-  padding: 20px;
-  border-radius: 6px;
-}
-
-.step { display: none; }
-.step.active { display: block; }
-
-label {
-  display: block;
-  margin-top: 12px;
-  font-weight: bold;
-}
-
-input, textarea, select {
-  width: 100%;
-  padding: 8px;
-  margin-top: 4px;
-}
-
-textarea { min-height: 80px; }
-
-button {
-  padding: 10px 16px;
-  cursor: pointer;
-  margin-top: 15px;
-}
-
-.box {
-  border: 1px solid #ccc;
-  padding: 12px;
-  margin-top: 15px;
-  border-radius: 4px;
-}
-
-.progress {
-  height: 8px;
-  background: #ddd;
-  border-radius: 4px;
-  margin-bottom: 20px;
-}
-
-.progress-bar {
-  height: 8px;
-  background: #4caf50;
-  width: 0%;
-  border-radius: 4px;
-}
-
-.preview {
-  white-space: pre-wrap;
-  background: #f9f9f9;
-  padding: 12px;
-}
+body { font-family: Arial, sans-serif; background:#f4f4f4; margin:0; padding:0; }
+.container { max-width:800px; margin:20px auto; background:#fff; padding:20px; border-radius:6px; }
+.step { display:none; }
+.step.active { display:block; }
+label { display:block; margin-top:12px; font-weight:bold; }
+input, textarea, select { width:100%; padding:8px; margin-top:4px; }
+textarea { min-height:80px; }
+button { padding:10px 16px; cursor:pointer; margin-top:15px; }
+.box { border:1px solid #ccc; padding:12px; margin-top:15px; border-radius:4px; }
+.progress { height:8px; background:#ddd; border-radius:4px; margin-bottom:20px; }
+.progress-bar { height:8px; background:#4caf50; width:0%; border-radius:4px; }
+.preview { white-space:pre-wrap; background:#f9f9f9; padding:12px; }
+.info { font-size: 0.9em; color: #555; margin-top:5px; }
 </style>
 </head>
 
@@ -82,67 +35,70 @@ button {
 
 <form id="form">
 
-<!-- KROK 1 -->
+<!-- STEP 1: Dane osobowe -->
 <div class="step active">
   <h2>Dane osobowe</h2>
-  <label>Imię</label><input name="Imię">
-  <label>Nazwisko</label><input name="Nazwisko">
-  <label>Adres</label><textarea name="Adres"></textarea>
+  <label>Imię</label>
+  <input type="text" id="firstName">
+  <label>Nazwisko</label>
+  <input type="text" id="lastName">
+  <label>Adres (ulica, numer domu, nr mieszkania, kod pocztowy, miasto, kraj)</label>
+  <textarea id="address"></textarea>
 </div>
 
-<!-- KROK 2 -->
+<!-- STEP 2: Kontakt -->
 <div class="step">
   <h2>Kontakt</h2>
-  <label>Telefon</label><input name="Telefon">
-  <label>Email</label><input type="email" name="Email">
+  <label>Telefon</label>
+  <input type="text" id="phone">
+  <label>Email</label>
+  <input type="email" id="email">
 </div>
 
-<!-- KROK 3 -->
+<!-- STEP 3: Dane sprawy -->
 <div class="step">
   <h2>Dane sprawy</h2>
-  <label>Sygnatura sprawy</label><input name="Sygnatura">
-  <label>Data wyroku</label><input type="date" name="Data wyroku">
-  <label>Miasto sądu</label><input name="Miasto sądu">
+  <label>Sygnatura wyroku (wyroku na podstawie którego dostałeś karę w Słowenii)</label>
+  <input type="text" id="caseNo">
+  <label>Data wyroku</label>
+  <input type="date" id="judgmentDate">
+  <label>Miasto sądu skazującego (np.: Kreśko, Ljubljana etc.)</label>
+  <input type="text" id="courtCity">
 </div>
 
-<!-- KROK 4 -->
+<!-- STEP 4: Język i regulaminy -->
 <div class="step">
-  <h2>Język i regulamin</h2>
-  <label>Język zrozumiały</label><input name="Język">
+  <h2>Język i regulaminy</h2>
+  <label>Język w którym rozumiesz przepisy</label>
+  <input type="text" id="languageUnderstood">
   <label>Czy otrzymałeś regulamin?</label>
-  <select name="Regulamin">
-    <option>TAK</option>
-    <option>NIE</option>
+  <select id="regulations">
+    <option value="TAK">TAK</option>
+    <option value="NIE">NIE</option>
   </select>
 </div>
 
-<!-- KROK 5 -->
+<!-- STEP 5: Więzienia i cele -->
 <div class="step">
-  <h2>Więzienia i cele</h2>
-  <p><strong>Opisz pierwsze więzienie oraz pierwszą celę.</strong></p>
-
+  <h2>Więzienie i cela</h2>
+  <p>Opisz każde więzienie i celę, w której przebywałeś.</p>
   <div id="prisons"></div>
-
-  <button type="button" id="addFirstBtn" onclick="addFirstPrison()">
-    ➕ Opisz pierwsze więzienie i pierwszą celę
-  </button>
-
-  <button type="button" id="addNextBtn" onclick="addPrison()" style="display:none">
-    ➕ Dodaj kolejne więzienie
-  </button>
+  <button type="button" onclick="addPrison()">➕ Dodaj więzienie</button>
 </div>
 
-<!-- KROK 6 -->
+<!-- STEP 6: Podgląd -->
 <div class="step">
-  <h2>Podgląd końcowy</h2>
+  <h2>Podgląd</h2>
+  <div class="info">To są dane klienta w formie niezbędnej do wypełnienia dokumentu przez Prison Justice PL.</div>
   <div class="preview" id="preview"></div>
-
-  <button type="button" onclick="downloadTXT()">Pobierz i zapisz na urządzeniu</button>
-  <button type="button" onclick="copyText()">Skopiuj treść</button>
+  <button type="button" onclick="downloadTXT()">Zapisz na swoim urządzeniu (TXT)</button>
+  <button type="button" onclick="downloadPDF()">Zapisz na swoim urządzeniu (PDF)</button>
+  <button type="button" onclick="sendByEmail()">Wyślij mailem</button>
 </div>
 
-<div style="margin-top:20px;">
-  <button type="button" onclick="prev()">Wstecz</button>
+<!-- Nawigacja -->
+<div style="margin-top:20px">
+  <button type="button" onclick="prev()">Powrót</button>
   <button type="button" onclick="next()">Dalej</button>
 </div>
 
@@ -151,105 +107,94 @@ button {
 
 <script>
 let step = 0;
-let hasCell = false;
-const steps = document.querySelectorAll('.step');
+const steps = document.querySelectorAll(".step");
+const progressBar = document.getElementById("progressBar");
 
-function showStep() {
-  steps.forEach((s, i) => s.classList.toggle('active', i === step));
-  document.getElementById('progressBar').style.width =
-    ((step + 1) / steps.length * 100) + '%';
-
-  if (step === steps.length - 1) buildPreview();
+function showStep(){
+  steps.forEach((s,i)=>s.classList.toggle("active", i===step));
+  progressBar.style.width = ((step+1)/steps.length*100)+"%";
+  if(step===steps.length-1) buildPreview();
 }
 
-function next() {
-  if (step === 4 && !hasCell) {
-    alert("Musisz opisać przynajmniej jedną celę.");
-    return;
-  }
-  if (step < steps.length - 1) step++;
-  showStep();
-}
+function next(){ if(step<steps.length-1){ step++; showStep(); } }
+function prev(){ if(step>0){ step--; showStep(); } }
 
-function prev() {
-  if (step > 0) step--;
-  showStep();
-}
-
-function addFirstPrison() {
-  addPrison();
-  document.getElementById('addFirstBtn').style.display = 'none';
-  document.getElementById('addNextBtn').style.display = 'inline-block';
-}
-
-function addPrison() {
-  const div = document.createElement('div');
-  div.className = 'box';
-  div.innerHTML = `
-    <h3>Więzienie</h3>
-
-    <label>Nazwa więzienia</label>
-    <input name="Więzienie">
-
-    <label>Data pobytu (od – do)</label>
-    <input type="date" name="Pobyt od">
-    <input type="date" name="Pobyt do">
-
+function addPrison(){
+  const d=document.createElement("div");
+  d.className="box";
+  d.innerHTML=`
+    <label>Więzienie</label>
+    <input type="text">
     <div class="cells"></div>
-
-    <button type="button" onclick="addCell(this)">
-      + Dodaj kolejną celę (max 4)
-    </button>
+    <button type="button" onclick="addCell(this)">➕ Dodaj celę</button>
   `;
-
-  document.getElementById('prisons').appendChild(div);
-  addCell(div.querySelector('button'));
+  document.getElementById("prisons").appendChild(d);
 }
 
-function addCell(btn) {
-  const cells = btn.parentElement.querySelector('.cells');
-  if (cells.children.length >= 4) {
-    alert("Maksymalnie 4 cele.");
-    return;
-  }
-  hasCell = true;
-  const c = document.createElement('div');
-  c.className = 'box';
-  c.innerHTML = `
-    <h4>Cela ${cells.children.length + 1}</h4>
-    <label>Numer celi</label><input name="Numer celi">
-    <label>Ilość osób</label><input name="Ilość osób">
-    <label>Metraż</label><input name="Metraż">
-    <label>Oddział</label><input name="Oddział">
-    <label>Schemat celi</label><textarea name="Schemat"></textarea>
-  `;
-  cells.appendChild(c);
+function addCell(btn){
+  const c=document.createElement("div");
+  c.className="box";
+  c.innerHTML=`<label>Opis celi</label><textarea></textarea>`;
+  btn.parentElement.querySelector(".cells").appendChild(c);
 }
 
-function buildPreview() {
-  const data = new FormData(document.getElementById('form'));
-  let text = '';
-  for (let [k, v] of data.entries()) {
-    text += k + ': ' + v + '\n';
-  }
-  document.getElementById('preview').textContent = text;
+function collectFormData() {
+  const prisonsArr = [];
+  document.querySelectorAll("#prisons .box").forEach(pr => {
+    const prisonName = pr.querySelector("input").value;
+    const cells = [];
+    pr.querySelectorAll("textarea").forEach(t => cells.push(t.value));
+    prisonsArr.push({name: prisonName, cells: cells});
+  });
+
+  return {
+    first_name: document.getElementById("firstName").value,
+    last_name: document.getElementById("lastName").value,
+    address: document.getElementById("address").value,
+    phone: document.getElementById("phone").value,
+    email: document.getElementById("email").value,
+    case: {
+      signature: document.getElementById("caseNo").value,
+      judgment_date: document.getElementById("judgmentDate").value,
+      court_city: document.getElementById("courtCity").value
+    },
+    language_understood: document.getElementById("languageUnderstood").value,
+    regulations_received: document.getElementById("regulations").value,
+    prisons: prisonsArr
+  };
 }
 
-function downloadTXT() {
-  const blob = new Blob([document.getElementById('preview').textContent], { type: "text/plain" });
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "formularz_osadzenie.txt";
+function buildPreview(){
+  const data = collectFormData();
+  document.getElementById("preview").textContent = JSON.stringify(data, null, 2);
+}
+
+function downloadTXT(){
+  const blob=new Blob([document.getElementById("preview").textContent],{type:"text/plain"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="formularz.txt";
   a.click();
 }
 
-function copyText() {
-  navigator.clipboard.writeText(document.getElementById('preview').textContent);
-  alert("Skopiowano treść.");
+function downloadPDF(){
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  const content = document.getElementById("preview").textContent;
+  const lines = doc.splitTextToSize(content, 180);
+  doc.text(lines, 10, 10);
+  doc.save("formularz.pdf");
+}
+
+function sendByEmail(){
+  const data = collectFormData();
+  const json = JSON.stringify(data, null, 2);
+  const subject = encodeURIComponent("Prison Justice – formularz klienta");
+  const body = encodeURIComponent("Proszę nie zmieniać formatu danych.\n\n" + json);
+  window.location.href = `mailto:twojemail@domena.pl?subject=${subject}&body=${body}`;
 }
 
 showStep();
 </script>
-
 </body>
 </html>
